@@ -83,7 +83,7 @@
 
 <h2 class="no-num no-toc" id="abstract">Abstract</h2>
 
-<p>This specification defines a means for site developers to programmatically determine 
+<p>This specification defines a means for site developers to programmatically determine
 the current visibility state of the page in order to develop power and CPU efficient web applications.
 </p>
 
@@ -138,7 +138,7 @@ cite this document as other than work in progress. </p>
   <li><a href="#conformance-requirements"><span class="secno">2
     </span>Conformance requirements</a></li>
   <li><a href="#terminology"><span class="secno">3 </span>Terminology</a></li>
-  <li><a href="#sec-page-visibility"><span class="secno">4 </span>Page Visibility</a> 
+  <li><a href="#sec-page-visibility"><span class="secno">4 </span>Page Visibility</a>
     <ol class="toc">
       <li><a href="#sec-page-visibility-introduction"><span class="secno">4.1 </span>Introduction</a></li>
       <li><a href="#sec-document-interface"><span class="secno">4.2 </span>Extensions to the <code>Document</code> interface</a></li>
@@ -158,17 +158,17 @@ cite this document as other than work in progress. </p>
 <p>This section is non-normative.</p>
 
 <p>
-The Page Visibility specification defines a means for site developers to 
-programmatically determine the current visibility of a document and be notified 
-of visibility changes. Without knowing the visibility state of a page, web developers 
-have been designing webpages as if they are always visible. This not only results in higher 
+The Page Visibility specification defines a means for site developers to
+programmatically determine the current visibility of a document and be notified
+of visibility changes. Without knowing the visibility state of a page, web developers
+have been designing webpages as if they are always visible. This not only results in higher
 machine resource utilization, but it prevents web developers from making runtime
 decisions based on whether the webpage is visible to the user. Designing web pages with knowledge
 of the page visibility will allow for improved user experiences and power efficient sites.</p>
 
 <p>With this interface, web applications may chose to alter behavior based on whether they are
 visible to the user or not. For example, this interface can be used to scale back work when the page is no
-longer visible. If a web based email client is visible, it may check the server for new messages every few seconds. 
+longer visible. If a web based email client is visible, it may check the server for new messages every few seconds.
 When hidden it might scale checking email to every few minutes. This interface can also be used to provide better runtime
 user experience decisions not related to power management. For example, a puzzle game could be paused when the user
 no longer has the game visible. Further, this interface can be used by advertisers to not charge for ads that are
@@ -176,7 +176,7 @@ not visible to users.</p>
 
 
 <div class="example">
-<p>For example, the following script shows a theoretical web based email client checking for new messages every second without knowledge of 
+<p>For example, the following script shows a theoretical web based email client checking for new messages every second without knowledge of
 the Page Visibility:</p>
 <pre>
 &lt;!DOCTYPE html&gt;
@@ -190,7 +190,7 @@ the Page Visibility:</p>
        timer = setInterval(checkEmail, PERIOD);
    }
 
-   function checkEmail() { 
+   function checkEmail() {
        // Check server for new messages
    }
 
@@ -204,8 +204,8 @@ the Page Visibility:</p>
 <p>The script will always check for messages every second, even if the user
 is not actively viewing the page because it is not visible. This is an example of poor resource management.</p>
 
-<p>Using the <a href="#dom-document-hidden"><code>hidden</code></a> attribute of the <a href="#document">Document</a> 
-interface and the <a href="#pv-visibility-change-event"><code>visibilitychange</code></a> event, 
+<p>Using the <a href="#dom-document-hidden"><code>hidden</code></a> attribute of the <a href="#document">Document</a>
+interface and the <a href="#pv-visibility-change-event"><code>visibilitychange</code></a> event,
 the page will be able to throttle checking messages to every minute when the
 page is no longer visible.</p>
 
@@ -230,7 +230,7 @@ page is no longer visible.</p>
        timer = setInterval(checkEmail, (document.hidden) ? PERIOD_NOT_VISIBLE : PERIOD_VISIBLE);
    }
 
-   function checkEmail() { 
+   function checkEmail() {
        // Check server for new messages
    }
 
@@ -301,24 +301,28 @@ enum <dfn id="VisibilityState">VisibilityState</dfn> { "hidden", "visible", "pre
 
 partial interface <dfn id="document">Document</dfn> {
   readonly attribute boolean <a href="#dom-document-hidden" title="isHidden">hidden</a>;
-  readonly attribute <a href="#VisibilityState" title="VisibilityState">VisibilityState</a> <a href="#dom-document-visibilitystate" title="visibilitystate">visibilityState</a>; 
+  readonly attribute <a href="#VisibilityState" title="VisibilityState">VisibilityState</a> <a href="#dom-document-visibilitystate" title="visibilitystate">visibilityState</a>;
 };
 </pre>
 
 
 <h4><code><dfn id="dom-document-hidden">hidden</dfn></code> attribute</h4>
 
-<p>On getting, the <a href="#dom-document-hidden"><code>hidden</code></a> attribute <span class='rfc2119'>MUST</span> return false if the given <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> is at least partially visible on at least one screen. The attribute <span class='rfc2119'>SHOULD</span> return true if the given <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> is not visible at all.
+<p>On getting, the <a href="#dom-document-hidden"><code>hidden</code></a> attribute <span class="rfc2119">MUST</span> return true if the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> contained by the
+<a href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top level browsing context</a> (root window in the browser's viewport) <a href="#HTML5">[HTML5]</a>
+is not visible at all. The attribute <span class="rfc2119">MUST</span> return false if the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> contained by the
+<a href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top level browsing context</a>
+ is at least partially visible on at least one screen.
 </p>
 
 <p>
-If the <a href="http://www.w3.org/TR/html5/browsers.html#dom-document-defaultview">defaultView</a> of the 
-<a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> is null, on getting, 
+If the <a href="http://www.w3.org/TR/html5/browsers.html#dom-document-defaultview">defaultView</a> of the
+<a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> is null, on getting,
 the <a href="#dom-document-hidden"><code>hidden</code></a> attribute <span class='rfc2119'>MUST</span> return true.
 </p>
 
-<p>To accommodate accessibility tools that are typically full screen but still show a 
-view of the page, when applicable, this attribute MAY return false when the User Agent 
+<p>To accommodate accessibility tools that are typically full screen but still show a
+view of the page, when applicable, this attribute MAY return false when the User Agent
 is not minimized but is fully obscured by other applications.</p>
 
 <div class="note">
@@ -329,22 +333,20 @@ is not minimized but is fully obscured by other applications.</p>
 		 <li>The User Agent is not minimized, but the page is on a background tab.</li>
          <li>The User Agent is about to unload the page.</li>
          <li>The User Agent is about to traverse to a session history entry.</li>
-	 <li>The iFrame that is queried for this attribute is off the screen even though the page that contains the iframe is in the foreground and visible on the screen.</li>
-         <li>The document or one of its parent elements is styled so that it is hidden, such as with "display:none", "visibility:hidden", or "opacity:0".
-         <li>The Operating System lock screen is shown.</li>
-	</ul> 
-	
+	 <li>The Operating System lock screen is shown.</li>
+	</ul>
+
  <p>Likewise, as examples, on getting, the <a href="#dom-document-hidden"><code>hidden</code></a> attribute returns false when:</p>
  <ul>
 		 <li>The User Agent is not minimized and the page is on a foreground tab.</li>
 		 <li>The User Agent is fully obscured by an Accessibility Tool, like a magnifier, but
 		 a view of the page is shown.</li>
-	</ul> 
+	</ul>
 </div>
-	
+
 <h4><code><dfn id="dom-document-visibilitystate">visibilityState</dfn></code> attribute</h4>
 
-<p>On getting, <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute <span class='rfc2119'>MUST</span> return 
+<p>On getting, <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute <span class='rfc2119'>MUST</span> return
 one of the following <a href='http://www.w3.org/TR/WebIDL/#idl-DOMString'><code>DOMString</code></a>s or a vendor prefixed <a href='http://www.w3.org/TR/WebIDL/#idl-DOMString'><code>DOMString</code></a> as defined in <a href="#sec-vendor-prefix"><span class="secno">4.5 </span>Vendor Prefixes</a>:
 
 <ul>
@@ -352,22 +354,22 @@ one of the following <a href='http://www.w3.org/TR/WebIDL/#idl-DOMString'><code>
 	<li><code>visible</code>,</li>
 	<li><code>prerender</code>,</li>
         <li><code>unloaded</code>.</li>
-</ul> 
+</ul>
 
 
 <h5><code><dfn id="pv-page-hidden">hidden</dfn></code></h5>
-<p>On getting, the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute <span class='rfc2119'>SHOULD</span> return the <a href='http://www.w3.org/TR/WebIDL/#idl-DOMString'><code>DOMString</code></a> <a href="#pv-page-hidden"><code>hidden</code></a> if the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>  
+<p>On getting, the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute <span class='rfc2119'>MUST</span> return the <a href='http://www.w3.org/TR/WebIDL/#idl-DOMString'><code>DOMString</code></a> <a href="#pv-page-hidden"><code>hidden</code></a> if the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> contained by the top level browsing context
  is not visible at all on any screen.</p>
 
 <p>
-If the <a href="http://www.w3.org/TR/html5/browsers.html#dom-document-defaultview">defaultView</a> of the 
-<a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> is null, on getting, 
+If the <a href="http://www.w3.org/TR/html5/browsers.html#dom-document-defaultview">defaultView</a> of the
+<a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> is null, on getting,
 the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute <span class='rfc2119'>MUST</span> return the <a href='http://www.w3.org/TR/WebIDL/#idl-DOMString'><code>DOMString</code></a> <a href="#pv-page-hidden"><code>hidden</code></a>.
 </p>
- 
- <p>To accommodate accessibility tools that are typically full screen but still show a 
-view of the page, when applicable, on getting, the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute MAY return 
-the <a href='http://www.w3.org/TR/WebIDL/#idl-DOMString'><code>DOMString</code></a> <a href="#pv-page-visible"><code>visible</code></a>, instead of <a href="#pv-page-hidden"><code>hidden</code></a>, when the User Agent 
+
+ <p>To accommodate accessibility tools that are typically full screen but still show a
+view of the page, when applicable, on getting, the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute MAY return
+the <a href='http://www.w3.org/TR/WebIDL/#idl-DOMString'><code>DOMString</code></a> <a href="#pv-page-visible"><code>visible</code></a>, instead of <a href="#pv-page-hidden"><code>hidden</code></a>, when the User Agent
 is not minimized but is fully obscured by other applications.</p>
 
  <div class="note">
@@ -379,28 +381,28 @@ is not minimized but is fully obscured by other applications.</p>
 		 <li>The Operating System lock screen is shown.</li>
                  <li>The iFrame that is queried for this attribute is off the screen even though the page that contains the iframe is in the foreground and visible on the screen.</li>
                  <li>The document or one of its parent elements is styled so that it is hidden, such as with "display:none", "visibility:hidden", or "opacity:0".
-	</ul> 
+	</ul>
 </div>
 
 <h5><code><dfn id="pv-page-visible">visible</dfn></code></h5>
-<p>On getting, the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute <span class='rfc2119'>MUST</span> return the <a href='http://www.w3.org/TR/WebIDL/#idl-DOMString'><code>DOMString</code></a> <a href="#pv-page-visible"><code>visible</code></a> if the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>
+<p>On getting, the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute <span class='rfc2119'>MUST</span> return the <a href='http://www.w3.org/TR/WebIDL/#idl-DOMString'><code>DOMString</code></a> <a href="#pv-page-visible"><code>visible</code></a> if the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> contained by the top level browsing context
  is at least partially visible on at least one screen. This is the same condition under which the <code><dfn>hidden</dfn></code> attribute
 is set to false.</p>
-  
-<p>To accommodate accessibility tools that are typically full screen but still show a 
-view of the page, when applicable, on getting, the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute MAY return 
-the <a href='http://www.w3.org/TR/WebIDL/#idl-DOMString'><code>DOMString</code></a> <a href="#pv-page-visible"><code>visible</code></a> when the User Agent 
+
+<p>To accommodate accessibility tools that are typically full screen but still show a
+view of the page, when applicable, on getting, the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute MAY return
+the <a href='http://www.w3.org/TR/WebIDL/#idl-DOMString'><code>DOMString</code></a> <a href="#pv-page-visible"><code>visible</code></a> when the User Agent
 is not minimized but is fully obscured by other applications.</p>
 
 <h5><code><dfn id="pv-prerender">prerender</dfn></code></h5>
-<p>On getting, the <a href="#dom-document-visibilitystate">visibilityState</a> attribute MAY return the <a href='http://www.w3.org/TR/WebIDL/#idl-DOMString'><code>DOMString</code></a> <a href="#pv-prerender"><code>prerender</code></a> if the 
-<a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>
+<p>On getting, the <a href="#dom-document-visibilitystate">visibilityState</a> attribute MAY return the <a href='http://www.w3.org/TR/WebIDL/#idl-DOMString'><code>DOMString</code></a> <a href="#pv-prerender"><code>prerender</code></a> if the
+<a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> contained by the top level browsing context
 is loaded in the prerender mode and is not yet visible. User Agent support of the <a href="#pv-prerender"><code>prerender</code></a> return value of the <a href="#dom-document-visibilitystate">visibilityState</a> attribute is optional.
 </p>
 
 <h5><code><dfn id="pv-unloaded">unloaded</dfn></code></h5>
-<p>On getting, the <a href="#dom-document-visibilitystate">visibilityState</a> attribute <span class='rfc2119'>SHOULD</span> return the <a href='http://www.w3.org/TR/WebIDL/#idl-DOMString'><code>DOMString</code></a> <a href="#pv-unloaded"><code>unloaded</code></a> if the User Agent is to 
-<a href="http://www.w3.org/TR/html5/browsers.html#unloading-documents">unload</a> the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>. User Agent support of the <a href="#pv-unloaded"><code>unloaded</code></a> 
+<p>On getting, the <a href="#dom-document-visibilitystate">visibilityState</a> attribute <span class='rfc2119'>SHOULD</span> return the <a href='http://www.w3.org/TR/WebIDL/#idl-DOMString'><code>DOMString</code></a> <a href="#pv-unloaded"><code>unloaded</code></a> if the User Agent is to
+<a href="http://www.w3.org/TR/html5/browsers.html#unloading-documents">unload</a> the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> contained by the top level browsing context. User Agent support of the <a href="#pv-unloaded"><code>unloaded</code></a>
 return value of the <a href="#dom-document-visibilitystate">visibilityState</a> attribute is optional.
 </p>
 
@@ -408,8 +410,8 @@ return value of the <a href="#dom-document-visibilitystate">visibilityState</a> 
 The <code><dfn id="pv-visibility-change-event">visibilitychange</dfn></code> event</h3>
 
 <p>
-The User Agent <span class='rfc2119'>MUST</span> fire the <code>visibilitychange</code> event at the 
-<a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> when the User Agent determines that the visibility of the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> 
+The User Agent <span class='rfc2119'>MUST</span> fire the <code>visibilitychange</code> event at the
+<a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> when the User Agent determines that the visibility of the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> contained by the top level browsing context
 has changed.
 </p>
 
@@ -417,11 +419,11 @@ has changed.
 
 <p>
     When the User Agent determines that the visibility of the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>
-    has changed, the User Agent <span class='rfc2119'>MUST</span> run the following steps. 
+    contained by the top level browsing context has changed, the User Agent <span class='rfc2119'>MUST</span> run the following steps.
 </p>
 <p>
-    If the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>
-    is now at least partially visible on at least one screen, 
+    If the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> contained by the top level browsing context
+    is now at least partially visible on at least one screen,
 </p>
     <ol>
         <li>
@@ -435,15 +437,15 @@ has changed.
 		</li>
     </ol>
 <p>
-    Else if the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>
+    Else if the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> contained by the top level browsing context
     is now not visible or if the user agent is to <a href="http://www.w3.org/TR/html5/browsers.html#unloading-documents">unload</a> the
-	<a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>, 
+	<a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>,
 </p>
 <ol>
 	<li>
 		<p>
 		    If the user agent is to <a href="http://www.w3.org/TR/html5/browsers.html#unloading-documents">unload</a> the
-		    <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>, run the <a href="#now-hidden-algorithm">now hidden algorithm</a> 
+		    <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>, run the <a href="#now-hidden-algorithm">now hidden algorithm</a>
             during the <a href="http://www.w3.org/TR/html5/browsers.html#unloading-document-visibility-change-steps">unloading document visibility change steps</a>,
 		</p>
 	   <li>
@@ -455,7 +457,7 @@ has changed.
 <p>
         The <b><dfn id="now-visible-algorithm">now visible algorithm</dfn></b> runs the following steps synchronously:
 </p>
-        <ol> 
+        <ol>
             <li>
                 <p>Set the <a href="#dom-document-hidden"><code>hidden</code></a> attribute to <code>false</code>.</p>
             </li>
@@ -470,14 +472,14 @@ has changed.
 <p>
 The <b><dfn id="now-hidden-algorithm">now hidden algorithm</dfn></b> runs the following steps synchronously:
 </p>
-<ol> 
+<ol>
     <li>
         <p>Set the <a href="#dom-document-hidden"><code>hidden</code></a> attribute to <code>true</code>.</p>
     </li>
     <li>
         <p>Set the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute to <code>hidden</code>.
-           If the user agent is to <a href="http://www.w3.org/TR/html5/browsers.html#unloading-documents">unload</a> the 
-           <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>, set the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> 
+           If the user agent is to <a href="http://www.w3.org/TR/html5/browsers.html#unloading-documents">unload</a> the
+           <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>, set the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a>
            attribute to <code>unloaded</code>. Setting <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute to <code>unloaded</code>
            instead of <code>hidden</code> is optional.
         </p>
@@ -497,7 +499,7 @@ e.g., for experimental purposes, vendors <span class='rfc2119'>MUST</span> use t
 <p>If an extension to the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute return value
  is needed for an experimental visibility state, User Agents MUST update the <a href="#VisibilityState" title="VisibilityState">VisibilityState</a> enum with
  a <a href='http://www.w3.org/TR/WebIDL/#idl-DOMString'><code>DOMString</code></a> that uses the following convention:</p>
- 
+
 <p><code>[vendorprefix]-[name]</code></p>
 
 <p>Where,</p>
@@ -511,10 +513,10 @@ e.g., for experimental purposes, vendors <span class='rfc2119'>MUST</span> use t
 <h3 id="sec-privacy"><span class="secno">5 </span>Privacy</h3>
 
 <p>
-The <a href="#sec-document-interface">Page Visibility</a> API enables third party content on a web page to determine the 
-visibility of the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> with higher 
-precision compared to existing mechanisms, like <a href="http://www.w3.org/TR/html5/editing.html#focus-management">focus</a> 
-or <a href="http://www.w3.org/TR/html5/editing.html#focus-management">blur</a> events. However, for practical considerations, the additional exposure is not substantial. 
+The <a href="#sec-document-interface">Page Visibility</a> API enables third party content on a web page to determine the
+visibility of the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> contained by the top level browsing context with higher
+precision compared to existing mechanisms, like <a href="http://www.w3.org/TR/html5/editing.html#focus-management">focus</a>
+or <a href="http://www.w3.org/TR/html5/editing.html#focus-management">blur</a> events. However, for practical considerations, the additional exposure is not substantial.
 </p>
 
 
@@ -544,7 +546,7 @@ or <a href="http://www.w3.org/TR/html5/editing.html#focus-management">blur</a> e
 </dl>
 
 <h2 class="no-num" id="acknowledgements">Acknowledgements</h2>
-<p>We would like to sincerely thank Karen Anderson, Nic Jansma, Alex Komoroske, Cameron McCormack, James Robinson, 
+<p>We would like to sincerely thank Karen Anderson, Nic Jansma, Alex Komoroske, Cameron McCormack, James Robinson,
 Jonas Sicking, Kyle Simpson, Jason Weber, and Boris Zbarsky to acknowledge their contributions to this work.</p>
 </body>
 </html>
