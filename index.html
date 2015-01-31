@@ -452,8 +452,12 @@ has changed.
 			</p>
 		</li>
 </ol>
+<p>At certain points in the algorithms below it is said that a
+<dfn id="document-is-visible">document is visible</dfn> or a <dfn id="document-is-hidden">document is hidden</dfn>. These are
+hooks for <a href="#other-applicable-specifications">other applicable specifications</a> to add additional steps depending on the state of the <a href="#dom-document-hidden"><code>hidden</code></a> attribute.
+</p>
 <p>
-        The <b><dfn id="now-visible-algorithm">now visible algorithm</dfn></b> runs the following steps synchronously:
+  The <b><dfn id="now-visible-algorithm">now visible algorithm</dfn></b> runs the following steps synchronously:
 </p>
         <ol>
             <li>
@@ -465,6 +469,9 @@ has changed.
             <li>
                 <p>Fire a simple event named <code>visibilitychange</code> that bubbles, isn't cancelable, and has no default action,
                 at the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>.</p>
+            </li>
+            <li>
+              <p>Run <a href="#document-is-visible">document is visible</a>.</p>
             </li>
         </ol>
 <p>
@@ -485,6 +492,9 @@ The <b><dfn id="now-hidden-algorithm">now hidden algorithm</dfn></b> runs the fo
     <li>
         <p>Fire a simple event named <code>visibilitychange</code> that bubbles, isn't cancelable, and has no default action,
         at the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>.</p>
+    </li>
+    <li>
+      <p>Run <a href="#document-is-hidden">document is hidden</a>.</p>
     </li>
 </ol>
 
@@ -507,6 +517,16 @@ e.g., for experimental purposes, vendors <span class='rfc2119'>MUST</span> use t
     <li>and the above names are in ASCII.</li>
 </ul>
 
+<p>When vendor-neutral extensions to this specification are needed,
+either this specification can be updated accordingly, or an
+extension specification can be written that overrides the
+requirements in this specification. When someone applying this
+specification to their activities decides that they will recognize
+the requirements of such an extension specification, it becomes an
+<dfn id="other-applicable-specifications" title="other applicable specifications">applicable
+specification</dfn> for the purposes of conformance requirements in
+this specification.
+</p>
 
 <h3 id="sec-privacy"><span class="secno">5 </span>Privacy</h3>
 
