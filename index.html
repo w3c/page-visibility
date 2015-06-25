@@ -417,85 +417,43 @@ has changed.
 
 <p>
     When the User Agent determines that the visibility of the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>
-    contained by the top level browsing context has changed, the User Agent <span class='rfc2119'>MUST</span> run the following steps.
+    contained by the top level browsing context has changed, the User Agent <span class='rfc2119'>MUST</span> run the following steps:
 </p>
-<p>
-    If the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> contained by the top level browsing context
-    is now at least partially visible on at least one screen,
-</p>
-    <ol>
-        <li>
-			<p>
-			If traversing to a <a href="http://www.w3.org/TR/html5/browsers.html#session-history-entry">session history entry</a>,
-		   run the <a href="#now-visible-algorithm">now visible algorithm</a> before running the step to fire the <code><a href="http://www.w3.org/TR/html5/browsers.html#event-pageshow">pageshow</a></code> event.
-			</p>
-        </li>
-		<li>
-			<p>Otherwise, queue a task that runs the <a href="#now-visible-algorithm">now visible algorithm</a>.</p>
-		</li>
-    </ol>
-<p>
-    Else if the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> contained by the top level browsing context
-    is now not visible or if the user agent is to <a href="http://www.w3.org/TR/html5/browsers.html#unloading-documents">unload</a> the
-	<a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>,
-</p>
+
 <ol>
-	<li>
-		<p>
-		    If the user agent is to <a href="http://www.w3.org/TR/html5/browsers.html#unloading-documents">unload</a> the
-		    <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>, run the <a href="#now-hidden-algorithm">now hidden algorithm</a>
-            during the <a href="http://www.w3.org/TR/html5/browsers.html#unloading-document-visibility-change-steps">unloading document visibility change steps</a>,
-		</p>
-	   <li>
-			<p>
-                Otherwise, queue a task that runs the <a href="#now-hidden-algorithm">now hidden algorithm</a>.
-			</p>
-		</li>
+  <li>If the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> contained by the top level browsing context is now at least partially visible on at least one screen:</li>
+  <ol>
+    <li>If traversing to a <a href="http://www.w3.org/TR/html5/browsers.html#session-history-entry">session history entry</a>, run the <a href="#now-visible-algorithm">now visible algorithm</a> before running the step to fire the <code><a href="http://www.w3.org/TR/html5/browsers.html#event-pageshow">pageshow</a></code> event.</li>
+
+		<li>Otherwise, queue a task that runs the <a href="#now-visible-algorithm">now visible algorithm</a>.</li>
+  </ol>
+
+  <li>Else if the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a> contained by the top level browsing context is now not visible or if the user agent is to <a href="http://www.w3.org/TR/html5/browsers.html#unloading-documents">unload</a> the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>:</li>
+  <ol>
+    <li>If the user agent is to <a href="http://www.w3.org/TR/html5/browsers.html#unloading-documents">unload</a> the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>, run the <a href="#now-hidden-algorithm">now hidden algorithm</a> during the <a href="http://www.w3.org/TR/html5/browsers.html#unloading-document-visibility-change-steps">unloading document visibility change steps</a>.</li>
+    <li>Otherwise, queue a task that runs the <a href="#now-hidden-algorithm">now hidden algorithm</a>.</li>
+  </ol>
 </ol>
-<p>At certain points in the algorithms below it is said that a
-<dfn id="document-is-visible">document is visible</dfn> or a <dfn id="document-is-hidden">document is hidden</dfn>. These are
-hooks for <a href="#other-applicable-specifications">other applicable specifications</a> to add additional steps depending on the state of the <a href="#dom-document-hidden"><code>hidden</code></a> attribute.
-</p>
-<p>
-  The <b><dfn id="now-visible-algorithm">now visible algorithm</dfn></b> runs the following steps synchronously:
-</p>
-        <ol>
-            <li>
-                <p>Set the <a href="#dom-document-hidden"><code>hidden</code></a> attribute to <code>false</code>.</p>
-            </li>
-            <li>
-                <p>Set the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute to <code>visible</code>.</p>
-            </li>
-            <li>
-                <p>Fire a simple event named <code>visibilitychange</code> that bubbles, isn't cancelable, and has no default action,
-                at the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>.</p>
-            </li>
-            <li>
-              <p>Run <a href="#document-is-visible">document is visible</a>.</p>
-            </li>
-        </ol>
-<p>
-The <b><dfn id="now-hidden-algorithm">now hidden algorithm</dfn></b> runs the following steps synchronously:
-</p>
+
+<p>The <b><dfn id="now-visible-algorithm">now visible algorithm</dfn></b> runs the following steps synchronously:</p>
+
 <ol>
-    <li>
-        <p>Set the <a href="#dom-document-hidden"><code>hidden</code></a> attribute to <code>true</code>.</p>
-    </li>
-    <li>
-        <p>Set the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute to <code>hidden</code>.
-           If the user agent is to <a href="http://www.w3.org/TR/html5/browsers.html#unloading-documents">unload</a> the
-           <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>, set the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a>
-           attribute to <code>unloaded</code>. Setting <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute to <code>unloaded</code>
-           instead of <code>hidden</code> is optional.
-        </p>
-    </li>
-    <li>
-        <p>Fire a simple event named <code>visibilitychange</code> that bubbles, isn't cancelable, and has no default action,
-        at the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>.</p>
-    </li>
-    <li>
-      <p>Run <a href="#document-is-hidden">document is hidden</a>.</p>
-    </li>
+  <li>Set the <a href="#dom-document-hidden"><code>hidden</code></a> attribute to <code>false</code>.</li>
+  <li>Set the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute to <code>visible</code>; <dfn id="document-is-visible">document is visible</dfn>.</li>
+  <li>Fire a simple event named <code>visibilitychange</code> that bubbles, isn't cancelable, and has no default action, at the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>.</li>
+  <li><dfn id="visibility-extension">Visibility extension point</dfn>: <a href="#other-applicable-specifications">applicable specifications</a> that want to react when a document became visible can run their own algorithms here.</li>
+</ol>
+
+<p>The <b><dfn id="now-hidden-algorithm">now hidden algorithm</dfn></b> runs the following steps synchronously:</p>
+
+<ol>
+  <li>Set the <a href="#dom-document-hidden"><code>hidden</code></a> attribute to <code>true</code>.</li>
+  <li>Set the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute to <code>hidden</code>; <dfn id="document-is-hidden">document is hidden</dfn>.</li>
+    <ul>
+      <li>If the user agent is to <a href="http://www.w3.org/TR/html5/browsers.html#unloading-documents">unload</a> the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>, set the <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute to <code>unloaded</code>. Setting <a href="#dom-document-visibilitystate"><code>visibilityState</code></a> attribute to <code>unloaded</code> instead of <code>hidden</code> is optional.</li>
+    </ul>
+  <li>Fire a simple event named <code>visibilitychange</code> that bubbles, isn't cancelable, and has no default action, at the <a href="http://www.w3.org/TR/html5/dom.html#document">Document</a>.</li>
+  <li><dfn id="visibility-extension">Visibility extension point</dfn>: <a href="#other-applicable-specifications">applicable specifications</a> that want to react when a document became visible can run their own algorithms here.</li>
 </ol>
 
 <h3 id="sec-vendor-prefix"><span class="secno">4.5 </span>Vendor Prefixes</h3>
