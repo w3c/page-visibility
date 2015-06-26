@@ -109,15 +109,15 @@
         visibility:
       </p>
       <pre class="example highlight" title="Inefficient use of resources">
- var timer = 0;
- const PERIOD = 1000;
- document.onload = function() {
-    timer = setInterval(checkEmail, PERIOD);
- }
+        var timer = 0;
+        const PERIOD = 1000;
+        document.onload = function () {
+          timer = setInterval(checkEmail, PERIOD);
+        }
 
- function checkEmail() {
-    // Check server for new messages
- }
+        function checkEmail() {
+          // Check server for new messages
+        }
 </pre>
       <p>
         The script will always check for messages every second, even if the
@@ -134,10 +134,11 @@
       </p>
       <pre class="example highlight" title="Improved efficiency">
         var timer = 0;
-        function getNextTickTime(){
-         const PERIOD_VISIBLE = 1000;
-         const PERIOD_HIDDEN = 60000;
-         return (document.hidden) ? PERIOD_HIDDEN : PERIOD_VISIBLE;
+
+        function getNextTickTime() {
+          const PERIOD_VISIBLE = 1000;
+          const PERIOD_HIDDEN = 60000;
+          return (document.hidden) ? PERIOD_HIDDEN : PERIOD_VISIBLE;
         }
 
         function visibilityChanged() {
@@ -149,9 +150,9 @@
           // Check server for new messages
         }
 
-        document.onload = function() {
-         timer = setInterval(checkEmail, getNextTickTime());
-         document.addEventListener("visibilitychange", visibilityChanged);
+        document.onload = function () {
+          timer = setInterval(checkEmail, getNextTickTime());
+          document.addEventListener("visibilitychange", visibilityChanged);
         }
 </pre>
     </section>
