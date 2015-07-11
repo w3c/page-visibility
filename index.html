@@ -94,67 +94,30 @@
         Examples of usage
       </h2>
       <p>
-        If a web based email client is <a>visible</a>, it could check the
-        server for new messages every few seconds. When <a>hidden</a> it might
-        scale checking email to every few minutes. This interface can also be
-        used to provide better runtime user experience decisions not related to
-        power management. For example, a puzzle game could be paused when the
-        user no longer has the game <a>visible</a>. Further, this interface can
-        be used by advertisers to not charge for ads that are not
-        <a>visible</a> to users.
+        To improve the user experience and optimize CPU and power efficiency the application could autoplay a video when the application is <a>visible</a>, and automatically pause the playback when the application is <a>hidden</a>:
       </p>
-      <p>
-        The following script shows a theoretical web based email client
-        checking for new messages every second without knowledge of the page's
-        visibility:
-      </p>
-      <pre class="example highlight" title="Inefficient use of resources">
-        var timer = 0;
-        const PERIOD = 1000;
-        document.onload = function () {
-          timer = setInterval(checkEmail, PERIOD);
-        }
+      <pre class="example highlight" title="Visibility-aware video playback">
+      var videoElement = document.getElementById("videoElement");
 
-        function checkEmail() {
-          // Check server for new messages
+      // Autoplay the video if application is visible
+      if (!document.hidden) {
+        videoElement.play();
+      }
+
+      // Handle page visibility change events
+      function handleVisibilityChange() {
+        if (document.hidden) {
+          videoElement.pause();
+        } else {
+          videoElement.play();
         }
+      }
+
+      document.addEventListener(visibilityChange, handleVisibilityChange, false);
 </pre>
       <p>
-        The script will always check for messages every second, even if the
-        user is not actively viewing the page because it is not <a>visible</a>.
-        This is an example of poor resource management.
+        Similar logic can be applied to intellegently pause and resume, or throttle, execution of application code such as animation loops, analytics, and other types of processing. By combining the <code>hidden</code> attribute of the <a>Document</a> interface and the <code>visibilitychange</code> event, the application is able to both query and listen to page visibility events to deliver a better user experience, as well as improve efficiency and performance of its execution.
       </p>
-      <p>
-        Conversely, the following script shows a theoretical web-based email
-        client checking for new messages every second when visible and every
-        minute when not visible. By combining the <code>hidden</code> attribute
-        of the <a>Document</a> interface and the <code>visibilitychange</code>
-        event, the page is able to throttle checking messages to every minute
-        when the page is no longer visible.
-      </p>
-      <pre class="example highlight" title="Improved efficiency">
-        var timer = 0;
-
-        function getNextTickTime() {
-          const PERIOD_VISIBLE = 1000;
-          const PERIOD_HIDDEN = 60000;
-          return (document.hidden) ? PERIOD_HIDDEN : PERIOD_VISIBLE;
-        }
-
-        function visibilityChanged() {
-          clearTimeout(timer);
-          timer = setInterval(checkEmail, getNextTickTime())
-        }
-
-        function checkEmail() {
-          // Check server for new messages
-        }
-
-        document.onload = function () {
-          timer = setInterval(checkEmail, getNextTickTime());
-          document.addEventListener("visibilitychange", visibilityChanged);
-        }
-</pre>
     </section>
     <section>
       <h2>
