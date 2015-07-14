@@ -7,9 +7,9 @@
     </title>
     <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class=
     "remove">
-</script>
+    </script>
     <script class='remove'>
-//make tidy happy
+    //make tidy happy
     var respecConfig = {
     previousPublishDate: "2013-10-29",
     previousMaturity: 'WD',
@@ -94,7 +94,10 @@
         Examples of usage
       </h2>
       <p>
-        To improve the user experience and optimize CPU and power efficiency the application could autoplay a video when the application is <a>visible</a>, and automatically pause the playback when the application is <a>hidden</a>:
+        To improve the user experience and optimize CPU and power efficiency
+        the application could autoplay a video when the application is
+        <a>visible</a>, and automatically pause the playback when the
+        application is <a>hidden</a>:
       </p>
       <pre class="example highlight" title="Visibility-aware video playback">
       var videoElement = document.getElementById("videoElement");
@@ -116,7 +119,14 @@
       document.addEventListener(visibilityChange, handleVisibilityChange, false);
 </pre>
       <p>
-        Similar logic can be applied to intellegently pause and resume, or throttle, execution of application code such as animation loops, analytics, and other types of processing. By combining the <code>hidden</code> attribute of the <a>Document</a> interface and the <code>visibilitychange</code> event, the application is able to both query and listen to page visibility events to deliver a better user experience, as well as improve efficiency and performance of its execution.
+        Similar logic can be applied to intellegently pause and resume, or
+        throttle, execution of application code such as animation loops,
+        analytics, and other types of processing. By combining the
+        <code>hidden</code> attribute of the <a>Document</a> interface and the
+        <code>visibilitychange</code> event, the application is able to both
+        query and listen to page visibility events to deliver a better user
+        experience, as well as improve efficiency and performance of its
+        execution.
       </p>
     </section>
     <section>
@@ -194,8 +204,8 @@
           <li>Let <var>doc</var> be the <code>Document</code> of the <a>top
           level browsing context</a>.
           </li>
-          <li>If the <code>defaultView</code> of <var>doc</var> is <code>null</code>,
-          return <code>true</code>.
+          <li>If the <code>defaultView</code> of <var>doc</var> is
+          <code>null</code>, return <code>true</code>.
           </li>
           <li>if <var>doc</var> is <a>hidden</a>, return <code>true</code>.
           </li>
@@ -253,8 +263,8 @@
           <li>Let <var>doc</var> be the <code>Document</code> of the <a>top
           level browsing context</a>.
           </li>
-          <li>If the <code>defaultView</code> of <var>doc</var> is <code>null</code>,
-          return <code>hidden</code>.
+          <li>If the <code>defaultView</code> of <var>doc</var> is
+          <code>null</code>, return <code>hidden</code>.
           </li>
           <li>Otherwise, return the <a>VisibilityState</a> value that best
           matches the <a title="visibility states">visibility state</a>
@@ -393,7 +403,8 @@
       <ul>
         <li>
           <dfn><a href=
-          "http://www.w3.org/TR/html5/browsers.html#dom-document-defaultview"><code>defaultView</code></a></dfn>
+          "http://www.w3.org/TR/html5/browsers.html#dom-document-defaultview"><code>
+          defaultView</code></a></dfn>
         </li>
         <li>
           <dfn><a href=
