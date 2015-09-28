@@ -70,17 +70,16 @@
       </h2>
       <p>
         The <cite>Page Visibility API</cite> defines a means to
-        programmatically determine the <a title="visibility states">visibility
-        state</a> of a top level browsing context, and to be notified if the
-        <a title="visibility states">visibility state</a> changes. Without
-        knowing the <a title="visibility states">visibility state</a> of a
-        page, web developers have been designing web pages as if they are
-        always <a>visible</a>. This not only results in higher machine resource
+        programmatically determine the <a>visibility state</a> of a top level
+        browsing context, and to be notified if the <a>visibility state</a>
+        changes. Without knowing the <a>visibility state</a> of a page, web
+        developers have been designing web pages as if they are always
+        <a>visible</a>. This not only results in higher machine resource
         utilization, but it prevents web developers from making runtime
         decisions based on whether the web page is <a>visible</a> to the user.
-        Designing web pages with knowledge of the page's <a title=
-        "visibility states">visibility state</a> can result in improved user
-        experiences and power efficient sites.
+        Designing web pages with knowledge of the page's <a>visibility
+        state</a> can result in improved user experiences and power efficient
+        sites.
       </p>
       <p>
         With this API, web applications can choose to alter their behavior
@@ -135,7 +134,8 @@
       </h2>
       <p>
         The <a>Document</a> of the <a>top level browsing context</a> can be in
-        one of the following <dfn>visibility states</dfn>:
+        one of the following <dfn data-lt="visibility state">visibility
+        states</dfn>:
       </p>
       <dl>
         <dt>
@@ -267,8 +267,7 @@
           <code>null</code>, return <code>hidden</code>.
           </li>
           <li>Otherwise, return the <a>VisibilityState</a> value that best
-          matches the <a title="visibility states">visibility state</a>
-          <var>doc</var>.
+          matches the <a>visibility state</a> <var>doc</var>.
           </li>
         </ol>
         <p>
@@ -301,8 +300,8 @@
         Reacting to visibility changes
       </h2>
       <p>
-        The <a>task source</a> for these <a title="task">tasks</a> is the
-        <a>animation task source</a>.
+        The <a>task source</a> for these <a>tasks</a> is the <a>animation task
+        source</a>.
       </p>
       <p>
         When the user agent determines that the visibility of the
@@ -452,7 +451,7 @@
           source</a></dfn>
         </li>
         <li>
-          <dfn><a href=
+          <dfn data-lt="task|tasks"><a href=
           "http://www.w3.org/TR/html5/webappapis.html#concept-task">task</a></dfn>
         </li>
       </ul>
