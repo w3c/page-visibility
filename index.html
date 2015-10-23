@@ -246,13 +246,22 @@
           <code>null</code>, return <code>hidden</code>.
           </li>
           <li>Otherwise, return the <a>VisibilityState</a> value that best
-          matches the <a>visibility state</a> of <var>doc</var>.
-          </li>
+          matches the <a>visibility state</a> of <var>doc</var>:</li>
+            <ol>
+              <li>If the document was <a href="https://w3c.github.io/resource-hints/#prerender">prerendered</a> and has not previously transitioned to "visible", return "prerender".</li>
+              <li>Return "visible" if:</li>
+                <ol>
+                <li>The user agent is not minimized and the page is on a foreground tab.</li>
+                <li>The user agent is fully obscured by an accessibility tool, like a magnifier, but a view of the page is shown.</li>
+                </ol>
+              <li>Return "hidden" if:</li>
+                <ol>
+                <li>The user agent is minimized.</li>
+                <li>The user agent is not minimized, but the page is on a background tab.</li>
+                <li>The Operating System lock screen is shown.</li>
+                </ol>
+            </ol>
         </ol>
-        <p class="issue">
-          TODO: explicit definition of prerender, unload, session traversal,
-          etc...
-        </p>
         <p>
           To accommodate assistive technologies that are typically full screen
           but still show a view of the page, when applicable, on getting, the
@@ -260,38 +269,7 @@
           <code>visible</code>, instead of <code>hidden</code>, when the user
           agent is not minimized but is fully obscured by other applications.
         </p>
-        <div class="example">
-          <p>
-            For example, in the following cases the
-            <code>visibilityState</code> attribute would return
-            <code>hidden</code>:
-          </p>
-          <ul>
-            <li>The user agent is minimized.
-            </li>
-            <li>The user agent is not minimized, but the page is on a
-            background tab.
-            </li>
-            <li>The user agent is about to unload the page.
-            </li>
-            <li>The Operating System lock screen is shown.
-            </li>
-          </ul>
-          <p>
-            In the following cases the <code>visibilityState</code> attribute
-            would return <code>visible</code>:
-          </p>
-          <ul>
-            <li>The user agent is not minimized and the page is on a foreground
-            tab.
-            </li>
-            <li>The user agent is fully obscured by an accessibility tool, like
-            a magnifier, but a view of the page is shown.
-            </li>
-            <li>The user agent is about to traverse to a session history entry.
-            </li>
-          </ul>
-        </div>
+
       </section>
     </section>
     <section>
