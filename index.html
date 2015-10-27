@@ -2,9 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Page Visibility (Second Edition)</title>
-    <script src="//www.w3.org/Tools/respec/respec-w3c-common" class=
-    "remove">
+    <title>
+      Page Visibility (Second Edition)
+    </title>
+    <script src="//www.w3.org/Tools/respec/respec-w3c-common" class="remove">
     </script>
     <script class='remove'>
     //make tidy happy
@@ -123,14 +124,19 @@
       <pre class="example highlight" title="Visibility-aware video playback">
       var videoElement = document.getElementById("videoElement");
 
+      // pause video buffering if page is being prerendered
+      if (document.visibilityState == "prerender") {
+        // ...
+      }
+
       // Autoplay the video if application is visible
-      if (!document.hidden) {
+      if (document.visibilityState == "visible") {
         videoElement.play();
       }
 
       // Handle page visibility change events
       function handleVisibilityChange() {
-        if (document.hidden) {
+        if (document.visibilityState == "hidden") {
           videoElement.pause();
         } else {
           videoElement.play();
@@ -143,10 +149,10 @@
         Similar logic can be applied to intellegently pause and resume, or
         throttle, execution of application code such as animation loops,
         analytics, and other types of processing. By combining the
-        <code>hidden</code> attribute of the <a>Document</a> interface and the
-        <code>visibilitychange</code> event, the application is able to both
-        query and listen to page visibility events to deliver a better user
-        experience, as well as improve efficiency and performance of its
+        <code>visibilityState</code> attribute of the <a>Document</a> interface
+        and the <code>visibilitychange</code> event, the application is able to
+        both query and listen to page visibility events to deliver a better
+        user experience, as well as improve efficiency and performance of its
         execution.
       </p>
     </section>
@@ -179,16 +185,7 @@
         </dt>
         <dd>
           The <a>Document</a> is loaded in the prerender mode and is not yet
-          visible. User agent support of the <code>prerender</code> return
-          value of the <a>visibilityState</a> attribute is OPTIONAL.
-        </dd>
-        <dt>
-          <dfn id="idl-def-.unloaded">unloaded</dfn>
-        </dt>
-        <dd>
-          The user agent is to <a>unload</a> the <a>Document</a>. User agent
-          support of the <code>unloaded</code> return value of the
-          <a>visibilityState</a> attribute is OPTIONAL.
+          visible.
         </dd>
       </dl>
       <p>
@@ -197,7 +194,7 @@
       </p>
       <pre class="idl">
       enum VisibilityState {
-        "hidden", "visible", "prerender", "unloaded"
+        "hidden", "visible", "prerender"
       };
 </pre>
     </section>
@@ -212,6 +209,7 @@
       partial interface Document {
         readonly attribute boolean hidden;
         readonly attribute VisibilityState visibilityState;
+        attribute EventHandler onvisibilitychange;
       };
 </pre>
       <section>
@@ -223,55 +221,17 @@
           to determine if the document is hidden</dfn>:
         </p>
         <ol>
-          <li>Let <var>doc</var> be the <code>Document</code> of the <a>top
-          level browsing context</a>.
+          <li>If <a>steps to determine the visibility state</a> return
+          <code>visible</code>, then return <code>false</code>.
           </li>
-          <li>If the <code>defaultView</code> of <var>doc</var> is
-          <code>null</code>, return <code>true</code>.
-          </li>
-          <li>if <var>doc</var> is <a>hidden</a>, return <code>true</code>.
-          </li>
-          <li>Otherwise, return <code>false</code>.
+          <li>Otherwise, return <code>true</code>.
           </li>
         </ol>
-        <p>
-          To accommodate assistive technologies that are typically full screen
-          but still show a view of the page, when applicable, the
-          <code>hidden</code> attribute MAY return <code>false</code> when the
-          user agent is not minimized but is fully obscured by other
-          applications.
+        <p class="note">
+          Support for <code>hidden</code> attribute is maintained for
+          historical reasons. Developers should use
+          <code>visibilityState</code> where possible.
         </p>
-        <div class="example">
-          <p>
-            As examples, on getting, the <code>hidden</code> attribute returns
-            <code>true</code> when:
-          </p>
-          <ul>
-            <li>The user agent is minimized.
-            </li>
-            <li>The user agent is not minimized, but the page is on a
-            background tab.
-            </li>
-            <li>The user agent is about to unload the page.
-            </li>
-            <li>The user agent is about to traverse to a session history entry.
-            </li>
-            <li>The operating system's lock screen is shown.
-            </li>
-          </ul>
-          <p>
-            Likewise, as examples, on getting, the <code>hidden</code>
-            attribute returns <code>false</code> when:
-          </p>
-          <ul>
-            <li>The user agent is not minimized and the page is on a foreground
-            tab.
-            </li>
-            <li>The user agent is fully obscured by an accessibility tool, like
-            a magnifier, but a view of the page is shown.
-            </li>
-          </ul>
-        </div>
       </section>
       <section>
         <h3>
@@ -289,8 +249,21 @@
           <code>null</code>, return <code>hidden</code>.
           </li>
           <li>Otherwise, return the <a>VisibilityState</a> value that best
-          matches the <a>visibility state</a> <var>doc</var>.
-          </li>
+          matches the <a>visibility state</a> of <var>doc</var>:</li>
+            <ol>
+              <li>If the document was <a href="https://w3c.github.io/resource-hints/#prerender">prerendered</a> and has not previously transitioned to "visible", return "prerender".</li>
+              <li>Return "visible" if:</li>
+                <ol>
+                <li>The user agent is not minimized and the page is on a foreground tab.</li>
+                <li>The user agent is fully obscured by an accessibility tool, like a magnifier, but a view of the page is shown.</li>
+                </ol>
+              <li>Return "hidden" if:</li>
+                <ol>
+                <li>The user agent is minimized.</li>
+                <li>The user agent is not minimized, but the page is on a background tab.</li>
+                <li>The Operating System lock screen is shown.</li>
+                </ol>
+            </ol>
         </ol>
         <p>
           To accommodate assistive technologies that are typically full screen
@@ -299,22 +272,7 @@
           <code>visible</code>, instead of <code>hidden</code>, when the user
           agent is not minimized but is fully obscured by other applications.
         </p>
-        <div class="note">
-          <p>
-            For example, in the following cases the
-            <code>visibilityState</code> attribute would return
-            <code>hidden</code>:
-          </p>
-          <ul>
-            <li>The user agent is minimized.
-            </li>
-            <li>The user agent is not minimized, but the page is on a
-            background tab.
-            </li>
-            <li>The Operating System lock screen is shown.
-            </li>
-          </ul>
-        </div>
+
       </section>
     </section>
     <section>
@@ -322,8 +280,7 @@
         Reacting to visibility changes
       </h2>
       <p>
-        The <a>task source</a> for these <a>tasks</a> is the <a>animation task
-        source</a>.
+        The <a>task source</a> for these <a>tasks</a> is the <a href="https://html.spec.whatwg.org/#user-interaction-task-source">user interaction task source</a>.
       </p>
       <p>
         When the user agent determines that the visibility of the
@@ -334,7 +291,7 @@
         <li>Let <var>doc</var> be the <a>Document</a> of the <a>top level
         browsing context</a>.
         </li>
-        <li>If <var>doc</var> is <a>visible</a>:
+        <li>If <var>doc</var> is now <a>visible</a>:
           <ol>
             <li>If traversing to a <a>session history entry</a>, run the <a>now
             visible algorithm</a> before running the step to fire the
@@ -350,7 +307,7 @@
           <ol>
             <li>If the user agent is to <a>unload</a> the <a>Document</a>, run
             the <a>now hidden algorithm</a> during the <a>unloading document
-            visibility change steps</a>,
+            visibility change steps</a>.
             </li>
             <li>Otherwise, <a>queue a task</a> that runs the <a>now hidden
             algorithm</a>.
@@ -366,14 +323,9 @@
         <li>Let <var>doc</var> be the <a>Document</a> of the <a>top level
         browsing context</a>.
         </li>
-        <li>Set the <code>hidden</code> attribute to <code>false</code>.
-        </li>
-        <li>Set the <code>visibilityState</code> attribute to
-        <code>visible</code>.
-        </li>
         <li>
           <a>Fire a simple event</a> named <code>visibilitychange</code> that
-          bubbles, isn't cancelable, and has no default action, at
+          bubbles, isn't cancelable, and has no default action, at the
           <var>doc</var>.
         </li>
       </ol>
@@ -384,14 +336,6 @@
       <ol>
         <li>Let <var>doc</var> be the <a>Document</a> of the <a>top level
         browsing context</a>.
-        </li>
-        <li>Set the <code>hidden</code> attribute to <code>true</code>.
-        </li>
-        <li>Set the <code>visibilityState</code> attribute to
-        <code>hidden</code>. If the user agent is to <a>unload</a> the
-        <a>Document</a>, set the <code>visibilityState</code> attribute to
-        <code>unloaded</code>. Setting <code>visibilityState</code> attribute
-        to <code>unloaded</code> instead of <code>hidden</code> is OPTIONAL.
         </li>
         <li>
           <a>Fire a simple event</a> named <code>visibilitychange</code> that
@@ -477,11 +421,6 @@
           "http://www.w3.org/TR/html5/webappapis.html#concept-task">task</a></dfn>
         </li>
       </ul>
-      <p>
-        The [[!animation-timing]] specification defines the <dfn><a href=
-        "http://w3c.github.io/animation-timing/#dfn-animation-task-source">animation
-        task source</a></dfn>.
-      </p>
       <p>
         The [[!DOM4]] specification defines how to <dfn><a href=
         "https://dom.spec.whatwg.org/#concept-event-fire">fire a simple
