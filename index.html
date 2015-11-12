@@ -251,16 +251,17 @@
           <li>Otherwise, return the <a>VisibilityState</a> value that best
           matches the <a>visibility state</a> of <var>doc</var>:</li>
             <ol>
-              <li>If the document was <a href="https://w3c.github.io/resource-hints/#prerender">prerendered</a> and has not previously transitioned to "visible", return "prerender".</li>
+              <li>If <var>doc</var> was <a href="https://w3c.github.io/resource-hints/#prerender">prerendered</a> and has not previously transitioned to "visible", return "prerender".</li>
               <li>Return "visible" if:</li>
                 <ol>
-                <li>The user agent is not minimized and the page is on a foreground tab.</li>
-                <li>The user agent is fully obscured by an accessibility tool, like a magnifier, but a view of the page is shown.</li>
+                <li>The user agent is not minimized and <var>doc</var> is the foreground tab.</li>
+                <li>The user agent is fully obscured by an accessibility tool, like a magnifier, but a view of the <var>doc</var> is shown.</li>
                 </ol>
               <li>Return "hidden" if:</li>
                 <ol>
                 <li>The user agent is minimized.</li>
-                <li>The user agent is not minimized, but the page is on a background tab.</li>
+                <li>The user agent is not minimized, but <var>doc</var> is on a background tab.</li>
+                <li>The user agent is to <a>unload</a> <var>doc</var>.</li>
                 <li>The Operating System lock screen is shown.</li>
                 </ol>
             </ol>
