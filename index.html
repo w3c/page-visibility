@@ -249,22 +249,39 @@
           <code>null</code>, return <code>hidden</code>.
           </li>
           <li>Otherwise, return the <a>VisibilityState</a> value that best
-          matches the <a>visibility state</a> of <var>doc</var>:</li>
+          matches the <a>visibility state</a> of <var>doc</var>:
             <ol>
-              <li>If <var>doc</var> was <a href="https://w3c.github.io/resource-hints/#prerender">prerendered</a> and has not previously transitioned to "visible", return "prerender".</li>
-              <li>Return "visible" if:</li>
+              <li>If <var>doc</var> was <a href=
+              "https://w3c.github.io/resource-hints/#prerender">prerendered</a>
+              and has not previously transitioned to "visible", return
+              "prerender".
+              </li>
+              <li>Return "visible" if:
                 <ol>
-                <li>The user agent is not minimized and <var>doc</var> is the foreground tab.</li>
-                <li>The user agent is fully obscured by an accessibility tool, like a magnifier, but a view of the <var>doc</var> is shown.</li>
+                  <li>The user agent is not minimized and <var>doc</var> is the
+                  foreground tab.
+                  </li>
+                  <li>The user agent is fully obscured by an accessibility
+                  tool, like a magnifier, but a view of the <var>doc</var> is
+                  shown.
+                  </li>
                 </ol>
-              <li>Return "hidden" if:</li>
+              </li>
+              <li>Return "hidden" if:
                 <ol>
-                <li>The user agent is minimized.</li>
-                <li>The user agent is not minimized, but <var>doc</var> is on a background tab.</li>
-                <li>The user agent is to <a>unload</a> <var>doc</var>.</li>
-                <li>The Operating System lock screen is shown.</li>
+                  <li>The user agent is minimized.
+                  </li>
+                  <li>The user agent is not minimized, but <var>doc</var> is on
+                  a background tab.
+                  </li>
+                  <li>The user agent is to <a>unload</a> <var>doc</var>.
+                  </li>
+                  <li>The Operating System lock screen is shown.
+                  </li>
                 </ol>
+              </li>
             </ol>
+          </li>
         </ol>
         <p>
           To accommodate assistive technologies that are typically full screen
@@ -273,7 +290,6 @@
           <code>visible</code>, instead of <code>hidden</code>, when the user
           agent is not minimized but is fully obscured by other applications.
         </p>
-
       </section>
     </section>
     <section>
@@ -281,7 +297,9 @@
         Reacting to visibility changes
       </h2>
       <p>
-        The <a>task source</a> for these <a>tasks</a> is the <a href="https://html.spec.whatwg.org/#user-interaction-task-source">user interaction task source</a>.
+        The <a>task source</a> for these <a>tasks</a> is the <a href=
+        "https://html.spec.whatwg.org/#user-interaction-task-source">user
+        interaction task source</a>.
       </p>
       <p>
         When the user agent determines that the visibility of the
