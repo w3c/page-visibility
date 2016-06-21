@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>
-      Page Visibility (Second Edition)
+      Page Visibility 1.1
     </title>
     <script src="//www.w3.org/Tools/respec/respec-w3c-common" class="remove">
     </script>
@@ -11,9 +11,8 @@
     //make tidy happy
     var respecConfig = {
     previousPublishDate: "2013-10-29",
-    previousMaturity: 'WD',
+    previousMaturity: 'REC',
     specStatus: 'ED',
-    prevVersion: 'WD',
     shortName: 'page-visibility',
     editors: [{
       name: "Ilya Grigorik",
@@ -87,7 +86,7 @@
         notices.
       </p>
     </section>
-    <section id="introduction">
+    <section id="introduction" class='informative'>
       <h2>
         Introduction
       </h2>
@@ -111,7 +110,10 @@
         longer <a>visible</a>.
       </p>
     </section>
-    <section>
+    <section id="conformance">
+      <!-- autofilled by respec -->
+    </section>
+    <section class='informative'>
       <h2>
         Examples of usage
       </h2>
@@ -167,13 +169,13 @@
       </p>
       <dl>
         <dt>
-          <dfn id="idl-def-.hidden">hidden</dfn>
+          <dfn for="VisibilityState">hidden</dfn>
         </dt>
         <dd>
           The <a>Document</a> is not <a>visible</a> at all on any screen.
         </dd>
         <dt>
-          <dfn id="idl-def-.visible">visible</dfn>
+          <dfn for="VisibilityState">visible</dfn>
         </dt>
         <dd>
           The <a>Document</a> is at least partially visible on at least one
@@ -181,7 +183,7 @@
           <code>hidden</code> attribute is set to <code>false</code>.
         </dd>
         <dt>
-          <dfn id="idl-def-.prerender">prerender</dfn>
+          <dfn for="VisibilityState">prerender</dfn>
         </dt>
         <dd>
           The <a>Document</a> is loaded in the prerender mode and is not yet
@@ -217,7 +219,7 @@
           <code>hidden</code> attribute
         </h3>
         <p>
-          On getting, the <code>hidden</code> attribute MUST run the <dfn>steps
+          On getting, the <dfn for='Document'>hidden</dfn> attribute MUST run the <dfn>steps
           to determine if the document is hidden</dfn>:
         </p>
         <ol>
@@ -238,7 +240,7 @@
           <code>visibilityState</code> attribute
         </h3>
         <p>
-          On getting, the <code>visibilityState</code> attribute the user agent
+          On getting, the <dfn for='Document'>visibilityState</dfn> attribute the user agent
           MUST run the <dfn>steps to determine the visibility state</dfn>:
         </p>
         <ol>
@@ -296,8 +298,8 @@
           <code>onvisiblitychange</code> event handler
         </h3>
         <p>
-          <code>onvisibilitychange</code> is an <a href=
-          "https://html.spec.whatwg.org/multipage/webappapis.html#event-handler-idl-attributes">
+          <dfn for='Document'>onvisibilitychange</dfn> is an <a href=
+          "https://www.w3.org/TR/html/webappapis.html#event-handler-idl-event-handler-idl-attribute">
           event handler IDL attribute</a> for the <a>visibilitychange</a> event
           type.
         </p>
@@ -309,7 +311,7 @@
       </h2>
       <p>
         The <a>task source</a> for these <a>tasks</a> is the <a href=
-        "https://html.spec.whatwg.org/#user-interaction-task-source">user
+        "https://www.w3.org/TR/html/webappapis.html#user-interaction-task-source">user
         interaction task source</a>.
       </p>
       <p>
@@ -398,66 +400,66 @@
       <ul>
         <li>
           <dfn><a href=
-          "http://www.w3.org/TR/html5/browsers.html#dom-document-defaultview"><code>
+          "https://www.w3.org/TR/html/browsers.html#dom-document-defaultview"><code>
           defaultView</code></a></dfn>
         </li>
         <li>
           <dfn><a href=
-          "http://www.w3.org/TR/html5/browsers.html#event-pageshow"><code>pageshow</code></a></dfn>
+          "https://www.w3.org/TR/html/browsers.html#event-pageshow"><code>pageshow</code></a></dfn>
         </li>
         <li>
           <dfn><a href=
-          "http://www.w3.org/TR/html5/browsers.html#session-history-entry">session
+          "https://www.w3.org/TR/html/browsers.html#session-history-entry">session
           history entry</a></dfn>
         </li>
         <li>
           <dfn><a href=
-          "http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">
+          "https://www.w3.org/TR/html/browsers.html#top-level-browsing-context">
           top level browsing context</a></dfn>
         </li>
         <li>
           <dfn><a href=
-          "http://www.w3.org/TR/html5/browsers.html#unloading-document-visibility-change-steps">
+          "https://www.w3.org/TR/html/browsers.html#unloading-document-visibility-change-steps">
           unloading document visibility change steps</a></dfn>
         </li>
         <li>
           <dfn><a href=
-          "http://www.w3.org/TR/html5/browsers.html#unloading-documents">unload</a></dfn>
+          "https://www.w3.org/TR/html/browsers.html#unloading-documents">unload</a></dfn>
         </li>
         <li>
           <dfn><a href=
-          "http://www.w3.org/TR/html5/dom.html#document">Document</a></dfn>
+          "https://www.w3.org/TR/html/dom.html#document">Document</a></dfn>
         </li>
         <li>
           <dfn><a href=
-          "http://www.w3.org/TR/html5/editing.html#focus-management">blur</a></dfn>
+          "https://www.w3.org/TR/html/editing.html#focus-management">blur</a></dfn>
         </li>
         <li>
           <dfn><a href=
-          "http://www.w3.org/TR/html5/editing.html#focus-management">focus</a></dfn>
+          "https://www.w3.org/TR/html/editing.html#focus-management">focus</a></dfn>
         </li>
         <li>
           <a href=
-          "https://www.whatwg.org/specs/web-apps/current-work/#queue-a-task"><dfn>
+          "https://www.w3.org/TR/html/webappapis.html#queuing"><dfn>
           queue a task</dfn></a>
         </li>
         <li>
           <dfn><a href=
-          "http://www.w3.org/TR/html5/webappapis.html#task-source">task
+          "https://www.w3.org/TR/html/webappapis.html#task-source">task
           source</a></dfn>
         </li>
         <li>
           <dfn data-lt="task|tasks"><a href=
-          "http://www.w3.org/TR/html5/webappapis.html#concept-task">task</a></dfn>
+          "https://www.w3.org/TR/html/webappapis.html#concept-task">task</a></dfn>
         </li>
       </ul>
       <p>
         The [[!DOM4]] specification defines how to <dfn><a href=
-        "https://dom.spec.whatwg.org/#concept-event-fire">fire a simple
+        "https://www.w3.org/TR/dom/#concept-event-fire">fire a simple
         event</a></dfn>.
       </p>
     </section>
-    <section class="appendix">
+    <section id="acknowledgements" class="appendix">
       <h2>
         Acknowledgments
       </h2>
@@ -468,6 +470,8 @@
         contributions to this work.
       </p>
     </section>
-    <section id="conformance" class="appendix"></section>
+    <section id='changes' class='appendix informative'>
+      <h2>Changes since the first release</h2>
+    </section>
   </body>
 </html>
