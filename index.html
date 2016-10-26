@@ -10,10 +10,7 @@
     <script class='remove'>
     //make tidy happy
     var respecConfig = {
-    publishDate: "2016-06-23",
-    previousPublishDate: "2013-10-29",
-    previousMaturity: 'REC',
-    specStatus: 'FPWD',
+    specStatus: 'ED',
     shortName: 'page-visibility-2',
     editors: [{
       name: "Ilya Grigorik",
@@ -35,10 +32,10 @@
     }],
     edDraftURI: 'https://w3c.github.io/page-visibility/',
     wg: 'Web Performance Working Group',
-    wgURI: 'http://www.w3.org/webperf/',
+    wgURI: 'https://www.w3.org/webperf/',
     license: 'w3c-software-doc',
     wgPublicList: 'public-web-perf',
-    wgPatentURI: 'http://www.w3.org/2004/01/pp-impl/45211/status',
+    wgPatentURI: 'https://www.w3.org/2004/01/pp-impl/45211/status',
     noLegacyStyle: true,
     otherLinks: [{
       key: 'Repository',
@@ -85,13 +82,14 @@
     <section id="sotd">
       <p>Pave Visility Level 2 replaces the first version of [[PAGE-VISIBILITY]] and includes:</p>
       <ul>
-        <li>Processing and IDL clarifications:</li>
+        <li>Processing and IDL clarifications:
         <ul>
           <li><code>VisibilityState.unloaded</code> has been removed.</li>
           <li><a>Document.hidden</a> is historical. Use <a>Document.visibilityState</a> instead.</li>
           <li><a>Document.onvisibilitychange</a> has been added.</li>
           <li>Various enhancements and clarifications in the processing model and algorithms.</li>
         </ul>
+        </li>
         <li><a>Visibility state</a> is set to <code>hidden</code> when the user agent is unloading a document;</li>
       </ul>
     </section>
