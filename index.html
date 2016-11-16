@@ -383,17 +383,22 @@
         </li>
       </ol>
     </section>
-    <section id="privacy">
+    <section id="privacy-security">
       <h2>
-        Privacy
+        Privacy and Security
       </h2>
       <p>
-        The <cite>Page Visibility API</cite> enables third party content on a
-        web page to determine the visibility of the <a>Document</a> contained
-        by the <a>top level browsing context</a> with higher precision compared
-        to existing mechanisms, like <a>focus</a> or <a>blur</a> events.
-        However, for practical considerations, the additional exposure is not
-        substantial.
+        The <cite>Page Visibility API</cite> enables developers to know when a
+        <a>Document</a> is visible or in focus. Existing mechanisms, such as
+        the <code>focus</code> and <code>blur</code> events, when attached to
+        the <code>Window</code> object already provide a mechanism to detect
+        when the <a>Document</a> is the active document; the <code>unload</code>
+        event provides a notification that the page is being unloaded. This API
+        extends these capabilities by also exposing the <code>prerender</code>
+        state of the <a>Document</a>—see [[!RESOURCE-HINTS]] security and privacy
+        section for relevant considerations and best practices on the use of
+        prerender—and unifies all of the above in a single API to simplify
+        development of visibility-aware and efficient applications.
       </p>
     </section>
     <section>
