@@ -136,7 +136,7 @@
         Similar logic can be applied to intelligently pause and resume, or
         throttle, execution of application code such as animation loops,
         analytics, and other types of processing. By combining the
-        <code><a data-link-for="Document">visibilityState</a></code> attribute of the <a>Document</a> interface
+        <a data-link-for="Document">visibilityState</a> attribute of the <a>Document</a> interface
         and the <code>visibilitychange</code> event, the application is able to
         both query and listen to page visibility events to deliver a better
         user experience, as well as improve efficiency and performance of its
@@ -145,7 +145,7 @@
     </section>
     <section data-dfn-for="VisibilityState" data-link-for="VisibilityState">
       <h2>
-        Visibility states and the <a data-link-for="VisibilityState">VisibilityState</a> enum
+        Visibility states and the <a>VisibilityState</a> enum
       </h2>
       <p>
         The <a>Document</a> of the <a>top level browsing context</a> can be in
@@ -157,7 +157,7 @@
           <dfn>hidden</dfn>
         </dt>
         <dd>
-          The <a>Document</a> is not <a data-link-for="VisibilityState">visible</a> at all on any screen.
+          The <a>Document</a> is not <a>visible</a> at all on any screen.
         </dd>
         <dt>
           <dfn>visible</dfn>
@@ -185,7 +185,7 @@
       };
 </pre>
     </section>
-    <section data-dfn-for="Document" data-link-for="Document">
+    <section data-dfn-for="Document">
       <h2>
         Extensions to the <a>Document</a> interface
       </h2>
@@ -217,12 +217,12 @@
         <p class="note">
           Support for <code>hidden</code> attribute is maintained for
           historical reasons. Developers should use
-          <code><a data-link-for="Document">visibilityState</a></code> where possible.
+          <a>visibilityState</a> where possible.
         </p>
       </section>
       <section>
         <h3>
-          <code><a data-link-for="Document">visibilityState</a></code> attribute
+          <a data-link-for="Document">visibilityState</a> attribute
         </h3>
         <p>
           On getting, the <dfn>visibilityState</dfn> attribute the user agent
@@ -235,7 +235,7 @@
           <li>If the <code>defaultView</code> of <var>doc</var> is
           <code>null</code>, return <code>hidden</code>.
           </li>
-          <li>Otherwise, return the <a data-link-for="VisibilityState">VisibilityState</a> value that best
+          <li>Otherwise, return the <a>VisibilityState</a> value that best
           matches the <a>visibility state</a> of <var>doc</var>:
             <ol>
               <li>If <var>doc</var> was <a href=
@@ -273,7 +273,7 @@
         <p>
           To accommodate assistive technologies that are typically full screen
           but still show a view of the page, when applicable, on getting, the
-          <code><a data-link-for="Document">visibilityState</a></code> attribute MAY return
+          <a data-link-for="Document">visibilityState</a> attribute MAY return
           <code>visible</code>, instead of <code>hidden</code>, when the user
           agent is not minimized but is fully obscured by other applications.
         </p>
