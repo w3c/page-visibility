@@ -37,37 +37,11 @@
     wgPublicList: 'public-web-perf',
     wgPatentURI: 'https://www.w3.org/2004/01/pp-impl/45211/status',
     noLegacyStyle: true,
-    otherLinks: [{
-      key: 'Repository',
-      data: [{
-        value: 'We are on GitHub.',
-        href: 'https://github.com/w3c/page-visibility'
-      }, {
-        value: 'File a bug.',
-        href: 'https://github.com/w3c/page-visibility/issues?q=milestone:%22Level%202%22'
-      }, {
-        value: 'Commit history.',
-        href: 'https://github.com/w3c/page-visibility/commits/gh-pages'
-      }]
-    },{
-      key: 'Mailing list',
-      data: [{
-        value: 'public-web-perf@w3.org',
-        href: 'https://lists.w3.org/Archives/Public/public-web-perf/'
-      }]
-    },{
-      key: 'Implementation',
-      data: [{
-        value: 'Can I use Page Visibility?',
-        href: 'http://caniuse.com/#feat=pagevisibility'
-      }, {
-        value: 'Test Suite',
-        href: 'http://w3c-test.org/page-visibility/'
-      }, {
-        value: 'Test Suite repository',
-        href: 'https://github.com/w3c/web-platform-tests/tree/master/page-visibility'
-      }]
-    }],
+    github: "https://github.com/w3c/page-visibility/",
+    wgPublicList: "public-web-perf",
+    implementationReportURI: "https://wpt.fyi/page-visibility/",
+    // noLegacyStyle: true,
+    testSuiteURI: "https://w3c-test.org/page-visibility/"
     };
     </script>
   </head>
@@ -94,7 +68,7 @@
       </ul>
       <p>
         The Working Group expects to demonstrate 2 implementations of the features listed in this specification by the end of the Candidate Recommendation phase.
-        <a for='VisibilityState'>prerender</a> is marked a feature at risk.
+        <a data-link-for="VisibilityState">prerender</a> is marked a feature at risk.
       </p>
     </section>
     <section id="introduction" class='informative'>
@@ -107,18 +81,18 @@
         browsing context, and to be notified if the <a>visibility state</a>
         changes. Without knowing the <a>visibility state</a> of a page, web
         developers have been designing web pages as if they are always
-        <a for='VisibilityState'>visible</a>. This not only results in higher machine resource
+        <a data-link-for="VisibilityState">visible</a>. This not only results in higher machine resource
         utilization, but it prevents web developers from making runtime
-        decisions based on whether the web page is <a for='VisibilityState'>visible</a> to the user.
+        decisions based on whether the web page is <a data-link-for="VisibilityState">visible</a> to the user.
         Designing web pages with knowledge of the page's <a>visibility
         state</a> can result in improved user experiences and power efficient
         sites.
       </p>
       <p>
         With this API, web applications can choose to alter their behavior
-        based on whether they are <a for='VisibilityState'>visible</a> to the user or not. For
+        based on whether they are <a data-link-for="VisibilityState">visible</a> to the user or not. For
         example, this API can be used to scale back work when the page is no
-        longer <a for='VisibilityState'>visible</a>.
+        longer <a data-link-for="VisibilityState">visible</a>.
       </p>
     </section>
     <section id="conformance">
@@ -131,8 +105,8 @@
       <p>
         To improve the user experience and optimize CPU and power efficiency
         the application could autoplay a video when the application is
-        <a for='VisibilityState'>visible</a>, and automatically pause the playback when the
-        application is <a for='VisibilityState'>hidden</a>:
+        <a data-link-for="VisibilityState">visible</a>, and automatically pause the playback when the
+        application is <a data-link-for="VisibilityState">hidden</a>:
       </p>
       <pre class="example highlight" title="Visibility-aware video playback">
       var videoElement = document.getElementById("videoElement");
@@ -162,16 +136,16 @@
         Similar logic can be applied to intelligently pause and resume, or
         throttle, execution of application code such as animation loops,
         analytics, and other types of processing. By combining the
-        <code>visibilityState</code> attribute of the <a>Document</a> interface
+        <a data-link-for="Document">visibilityState</a> attribute of the <a>Document</a> interface
         and the <code>visibilitychange</code> event, the application is able to
         both query and listen to page visibility events to deliver a better
         user experience, as well as improve efficiency and performance of its
         execution.
       </p>
     </section>
-    <section>
+    <section data-dfn-for="VisibilityState" data-link-for="VisibilityState">
       <h2>
-        Visibility states and the <code>VisibilityState</code> enum
+        Visibility states and the <a>VisibilityState</a> enum
       </h2>
       <p>
         The <a>Document</a> of the <a>top level browsing context</a> can be in
@@ -180,13 +154,13 @@
       </p>
       <dl>
         <dt>
-          <dfn for="VisibilityState">hidden</dfn>
+          <dfn>hidden</dfn>
         </dt>
         <dd>
-          The <a>Document</a> is not <a for='VisibilityState'>visible</a> at all on any screen.
+          The <a>Document</a> is not <a>visible</a> at all on any screen.
         </dd>
         <dt>
-          <dfn for="VisibilityState">visible</dfn>
+          <dfn>visible</dfn>
         </dt>
         <dd>
           The <a>Document</a> is at least partially visible on at least one
@@ -194,7 +168,7 @@
           <code>hidden</code> attribute is set to <code>false</code>.
         </dd>
         <dt>
-          <dfn for="VisibilityState">prerender</dfn>
+          <dfn>prerender</dfn>
         </dt>
         <dd>
           The <a>Document</a> is loaded in the prerender mode and is not yet
@@ -203,7 +177,7 @@
       </dl>
       <p>
         The <a>visibility states</a> are reflected in the API via the
-        <a>VisibilityState</a> enum.
+        <dfn>VisibilityState</dfn> enum.
       </p>
       <pre class="idl">
       enum VisibilityState {
@@ -211,7 +185,7 @@
       };
 </pre>
     </section>
-    <section>
+    <section data-dfn-for="Document">
       <h2>
         Extensions to the <a>Document</a> interface
       </h2>
@@ -243,15 +217,15 @@
         <p class="note">
           Support for <code>hidden</code> attribute is maintained for
           historical reasons. Developers should use
-          <code>visibilityState</code> where possible.
+          <a>visibilityState</a> where possible.
         </p>
       </section>
       <section>
         <h3>
-          <code>visibilityState</code> attribute
+          <a data-link-for="Document">visibilityState</a> attribute
         </h3>
         <p>
-          On getting, the <dfn for='Document'>visibilityState</dfn> attribute the user agent
+          On getting, the <dfn>visibilityState</dfn> attribute the user agent
           MUST run the <dfn>steps to determine the visibility state</dfn>:
         </p>
         <ol>
@@ -299,7 +273,7 @@
         <p>
           To accommodate assistive technologies that are typically full screen
           but still show a view of the page, when applicable, on getting, the
-          <code>visibilityState</code> attribute MAY return
+          <a data-link-for="Document">visibilityState</a> attribute MAY return
           <code>visible</code>, instead of <code>hidden</code>, when the user
           agent is not minimized but is fully obscured by other applications.
         </p>
@@ -334,7 +308,7 @@
         <li>Let <var>doc</var> be the <a>Document</a> of the <a>top level
         browsing context</a>.
         </li>
-        <li>If <var>doc</var> is now <a for='VisibilityState'>visible</a>:
+        <li>If <var>doc</var> is now <a data-link-for="VisibilityState">visible</a>:
           <ol>
             <li>If traversing to a <a>session history entry</a>, run the <a>now
             visible algorithm</a> before running the step to fire the
@@ -345,7 +319,7 @@
             </li>
           </ol>
         </li>
-        <li>Else if <var>doc</var> is now not <a for='VisibilityState'>visible</a>, or if the user
+        <li>Else if <var>doc</var> is now not <a data-link-for="VisibilityState">visible</a>, or if the user
         agent is to <a>unload</a> <var>doc</var>:
           <ol>
             <li>If the user agent is to <a>unload</a> the <a>Document</a>, run
