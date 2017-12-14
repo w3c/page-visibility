@@ -84,12 +84,12 @@
       <p>
         The Working Group expects to demonstrate 2 implementations of the
         features listed in this specification by the end of the Candidate
-        Recommendation phase. <a data-link-for="VisibleState">prerender</a> is
-        marked a feature at risk.
+        Recommendation phase. <a data-link-for="VisibilityState">prerender</a>
+        is marked a feature at risk.
       </p>
     </section>
     <section id="introduction" class='informative' data-link-for=
-    "VisibleState">
+    "VisibilityState">
       <h2>
         Introduction
       </h2>
@@ -116,7 +116,7 @@
     <section id="conformance">
       <!-- autofilled by respec -->
     </section>
-    <section class='informative' data-link-for="VisibleState">
+    <section class='informative' data-link-for="VisibilityState">
       <h2>
         Examples of usage
       </h2>
@@ -161,9 +161,9 @@
         execution.
       </p>
     </section>
-    <section data-dfn-for="VisibleState" data-link-for="VisibleState">
+    <section data-dfn-for="VisibilityState" data-link-for="VisibilityState">
       <h2>
-        Visibility states and the <dfn>VisibleState</dfn> enum
+        Visibility states and the <code>VisibilityState</code> enum
       </h2>
       <p>
         The <a>Document</a> of the <a>top level browsing context</a> can be in
@@ -195,15 +195,15 @@
       </dl>
       <p>
         The <a>visibility states</a> are reflected in the API via the
-        <a>VisibleState</a> enum.
+        <code><dfn>VisibilityState</dfn></code> enum.
       </p>
       <pre class="idl">
-      enum VisibleState {
+      enum VisibilityState {
         "hidden", "visible", "prerender"
       };
       </pre>
     </section>
-    <section data-link-for="Document" data-dfn-for="Document">
+    <section data-dfn-for="Document">
       <h2>
         Extensions to the <code>Document</code> interface
       </h2>
@@ -213,11 +213,11 @@
       <pre class="idl">
       partial interface Document {
         readonly attribute boolean hidden;
-        readonly attribute VisibleState visibilityState;
+        readonly attribute VisibilityState visibilityState;
         attribute EventHandler onvisibilitychange;
       };
       </pre>
-      <section>
+      <section data-dfn-for="Document" data-link-for="Document">
         <h3>
           <dfn>hidden</dfn> attribute
         </h3>
@@ -225,7 +225,7 @@
           On getting, the <a>hidden</a> attribute MUST run the <dfn>steps to
           determine if the document is hidden</dfn>:
         </p>
-        <ol data-link-for="VisibleState" class="algorithm">
+        <ol data-link-for="VisibilityState" class="algorithm">
           <li>If <a>steps to determine the visibility state</a> return
           <a>visible</a>, then return <code>false</code>.
           </li>
@@ -237,7 +237,7 @@
           reasons. Developers should use <a>visibilityState</a> where possible.
         </p>
       </section>
-      <section>
+      <section data-dfn-for="Document" data-link-for="Document">
         <h3>
           <dfn>visibilityState</dfn> attribute
         </h3>
@@ -250,11 +250,11 @@
           browsing context</a>.
           </li>
           <li>If the <a>defaultView</a> of <var>doc</var> is <code>null</code>,
-          return "<a data-lt="VisibleState.hidden">hidden</a>".
+          return "<a data-lt="VisibilityState.hidden">hidden</a>".
           </li>
-          <li>Otherwise, return the <a>VisibleState</a> value that best matches
-          the <a>visibility state</a> of <var>doc</var>:
-            <ol data-link-for="VisibleState">
+          <li>Otherwise, return the <a>VisibilityState</a> value that best
+          matches the <a>visibility state</a> of <var>doc</var>:
+            <ol data-link-for="VisibilityState">
               <li>If <var>doc</var> was <a data-cite=
               "RESOURCE-HINTS#prerender">prerendered</a> [[!RESOURCE-HINTS]]
               and has not previously transitioned to "<a>visible</a>", return
@@ -287,7 +287,7 @@
             </ol>
           </li>
         </ol>
-        <p data-link-for="VisibleState">
+        <p data-link-for="VisibilityState">
           To accommodate assistive technologies that are typically full screen
           but still show a view of the page, when applicable, on getting, the
           <a data-link-for="Document">visibilityState</a> attribute MAY return
@@ -295,7 +295,7 @@
           not minimized but is fully obscured by other applications.
         </p>
       </section>
-      <section>
+      <section data-dfn-for="Document" data-link-for="Document">
         <h3>
           <dfn>onvisibilitychange</dfn> event handler attribute
         </h3>
@@ -321,7 +321,7 @@
         <a>Document</a> of the <a>top level browsing context</a> has changed,
         the user agent MUST run the following steps:
       </p>
-      <ol class="algorithm" data-link-for="VisibleState">
+      <ol class="algorithm" data-link-for="VisibilityState">
         <li>Let <var>doc</var> be the <a>Document</a> of the <a>top level
         browsing context</a>.
         </li>
@@ -390,7 +390,7 @@
         <a>Document</a> is the active document; the <code>unload</code> event
         provides a notification that the page is being unloaded. This API
         extends these capabilities by also exposing the <a data-link-for=
-        "VisibleState">prerender</a> state of the <a>Document</a>—see
+        "VisibilityState">prerender</a> state of the <a>Document</a>—see
         [[!RESOURCE-HINTS]] security and privacy section for relevant
         considerations and best practices on the use of prerender—and unifies
         all of the above in a single API to simplify development of
