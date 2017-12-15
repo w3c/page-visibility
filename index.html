@@ -58,7 +58,7 @@
         Page Visibility Level 2 replaces the first version of
         [[PAGE-VISIBILITY]] and includes:
       </p>
-      <ul>
+      <ul data-link-for="Document">
         <li>Processing and IDL clarifications:
           <ul>
             <li>
@@ -77,8 +77,8 @@
           </ul>
         </li>
         <li>
-          <a>Visibility state</a> is set to <code>hidden</code> when the user
-          agent is unloading a document;
+          <a>Visibility state</a> is set to <a>hidden</a> when the user agent
+          is unloading a document;
         </li>
       </ul>
       <p>
@@ -88,7 +88,8 @@
         is marked a feature at risk.
       </p>
     </section>
-    <section id="introduction" class='informative'>
+    <section id="introduction" class='informative' data-link-for=
+    "VisibilityState">
       <h2>
         Introduction
       </h2>
@@ -98,34 +99,32 @@
         browsing context, and to be notified if the <a>visibility state</a>
         changes. Without knowing the <a>visibility state</a> of a page, web
         developers have been designing web pages as if they are always
-        <a data-link-for="VisibilityState">visible</a>. This not only results
-        in higher machine resource utilization, but it prevents web developers
-        from making runtime decisions based on whether the web page is
-        <a data-link-for="VisibilityState">visible</a> to the user. Designing
-        web pages with knowledge of the page's <a>visibility state</a> can
-        result in improved user experiences and power efficient sites.
+        <a>visible</a>. This not only results in higher machine resource
+        utilization, but it prevents web developers from making runtime
+        decisions based on whether the web page is <a>visible</a> to the user.
+        Designing web pages with knowledge of the page's <a>visibility
+        state</a> can result in improved user experiences and power efficient
+        sites.
       </p>
       <p>
         With this API, web applications can choose to alter their behavior
-        based on whether they are <a data-link-for=
-        "VisibilityState">visible</a> to the user or not. For example, this API
-        can be used to scale back work when the page is no longer
-        <a data-link-for="VisibilityState">visible</a>.
+        based on whether they are <a>visible</a> to the user or not. For
+        example, this API can be used to scale back work when the page is no
+        longer <a>visible</a>.
       </p>
     </section>
     <section id="conformance">
       <!-- autofilled by respec -->
     </section>
-    <section class='informative'>
+    <section class='informative' data-link-for="VisibilityState">
       <h2>
         Examples of usage
       </h2>
       <p>
         To improve the user experience and optimize CPU and power efficiency
         the application could autoplay a video when the application is
-        <a data-link-for="VisibilityState">visible</a>, and automatically pause
-        the playback when the application is <a data-link-for=
-        "VisibilityState">hidden</a>:
+        <a>visible</a>, and automatically pause the playback when the
+        application is <a>hidden</a>:
       </p>
       <pre class="example highlight" title="Visibility-aware video playback">
       var videoElement = document.getElementById("videoElement");
@@ -151,27 +150,27 @@
 
       document.addEventListener('visibilitychange', handleVisibilityChange, false);
 </pre>
-      <p>
+      <p data-link-for="Document">
         Similar logic can be applied to intelligently pause and resume, or
         throttle, execution of application code such as animation loops,
         analytics, and other types of processing. By combining the
-        <a data-link-for="Document">visibilityState</a> attribute of the
-        <a>Document</a> interface and the <code>visibilitychange</code> event,
-        the application is able to both query and listen to page visibility
-        events to deliver a better user experience, as well as improve
-        efficiency and performance of its execution.
+        <a>visibilityState</a> attribute of the <a>Document</a> interface and
+        the <a>visibilitychange</a> event, the application is able to both
+        query and listen to page visibility events to deliver a better user
+        experience, as well as improve efficiency and performance of its
+        execution.
       </p>
     </section>
     <section data-dfn-for="VisibilityState" data-link-for="VisibilityState">
       <h2>
-        Visibility states and the <a>VisibilityState</a> enum
+        Visibility states and the <code>VisibilityState</code> enum
       </h2>
       <p>
         The <a>Document</a> of the <a>top level browsing context</a> can be in
         one of the following <dfn data-lt="visibility state">visibility
         states</dfn>:
       </p>
-      <dl>
+      <dl data-sort="">
         <dt>
           <dfn>hidden</dfn>
         </dt>
@@ -183,8 +182,8 @@
         </dt>
         <dd>
           The <a>Document</a> is at least partially visible on at least one
-          screen. This is the same condition under which the
-          <code>hidden</code> attribute is set to <code>false</code>.
+          screen. This is the same condition under which the <a>hidden</a>
+          attribute is set to <code>false</code>.
         </dd>
         <dt>
           <dfn>prerender</dfn>
@@ -196,20 +195,20 @@
       </dl>
       <p>
         The <a>visibility states</a> are reflected in the API via the
-        <dfn>VisibilityState</dfn> enum.
+        <code><dfn>VisibilityState</dfn></code> enum.
       </p>
       <pre class="idl">
       enum VisibilityState {
         "hidden", "visible", "prerender"
       };
-</pre>
+      </pre>
     </section>
     <section data-dfn-for="Document">
       <h2>
-        Extensions to the <a>Document</a> interface
+        Extensions to the <code>Document</code> interface
       </h2>
       <p>
-        This specification extends the [[!HTML51]] <a>Document</a> interface:
+        This specification extends the <a>Document</a> interface:
       </p>
       <pre class="idl">
       partial interface Document {
@@ -217,52 +216,51 @@
         readonly attribute VisibilityState visibilityState;
         attribute EventHandler onvisibilitychange;
       };
-</pre>
-      <section>
+      </pre>
+      <section data-dfn-for="Document" data-link-for="Document">
         <h3>
-          <code>hidden</code> attribute
+          <dfn>hidden</dfn> attribute
         </h3>
         <p>
-          On getting, the <dfn for='Document'>hidden</dfn> attribute MUST run
-          the <dfn>steps to determine if the document is hidden</dfn>:
+          On getting, the <a>hidden</a> attribute MUST run the <dfn>steps to
+          determine if the document is hidden</dfn>:
         </p>
-        <ol>
+        <ol data-link-for="VisibilityState" class="algorithm">
           <li>If <a>steps to determine the visibility state</a> return
-          <code>visible</code>, then return <code>false</code>.
+          <a>visible</a>, then return <code>false</code>.
           </li>
           <li>Otherwise, return <code>true</code>.
           </li>
         </ol>
         <p class="note">
-          Support for <code>hidden</code> attribute is maintained for
-          historical reasons. Developers should use <a>visibilityState</a>
-          where possible.
+          Support for <a>hidden</a> attribute is maintained for historical
+          reasons. Developers should use <a>visibilityState</a> where possible.
         </p>
       </section>
-      <section>
+      <section data-dfn-for="Document" data-link-for="Document">
         <h3>
-          <a data-link-for="Document">visibilityState</a> attribute
+          <dfn>visibilityState</dfn> attribute
         </h3>
         <p>
-          On getting, the <dfn>visibilityState</dfn> attribute the user agent
-          MUST run the <dfn>steps to determine the visibility state</dfn>:
+          On getting, the <a>visibilityState</a> attribute the user agent MUST
+          run the <dfn>steps to determine the visibility state</dfn>:
         </p>
-        <ol>
-          <li>Let <var>doc</var> be the <code>Document</code> of the <a>top
-          level browsing context</a>.
+        <ol class="algorithm">
+          <li>Let <var>doc</var> be the <a>Document</a> of the <a>top level
+          browsing context</a>.
           </li>
-          <li>If the <code>defaultView</code> of <var>doc</var> is
-          <code>null</code>, return <code>hidden</code>.
+          <li>If the <a>defaultView</a> of <var>doc</var> is <code>null</code>,
+          return "<a data-lt="VisibilityState.hidden">hidden</a>".
           </li>
           <li>Otherwise, return the <a>VisibilityState</a> value that best
           matches the <a>visibility state</a> of <var>doc</var>:
-            <ol>
-              <li>If <var>doc</var> was <a href=
-              "https://www.w3.org/TR/resource-hints/#prerender">prerendered</a>
-              [[!RESOURCE-HINTS]] and has not previously transitioned to
-              "visible", return "prerender".
+            <ol data-link-for="VisibilityState">
+              <li>If <var>doc</var> was <a data-cite=
+              "RESOURCE-HINTS#prerender">prerendered</a> [[!RESOURCE-HINTS]]
+              and has not previously transitioned to "<a>visible</a>", return
+              "<a>prerender</a>".
               </li>
-              <li>Return "visible" if:
+              <li>Return "<a>visible</a>" if:
                 <ol>
                   <li>The user agent is not minimized and <var>doc</var> is the
                   foreground tab.
@@ -273,7 +271,7 @@
                   </li>
                 </ol>
               </li>
-              <li>Return "hidden" if:
+              <li>Return "<a>hidden</a>" if:
                 <ol>
                   <li>The user agent is minimized.
                   </li>
@@ -289,21 +287,21 @@
             </ol>
           </li>
         </ol>
-        <p>
+        <p data-link-for="VisibilityState">
           To accommodate assistive technologies that are typically full screen
           but still show a view of the page, when applicable, on getting, the
           <a data-link-for="Document">visibilityState</a> attribute MAY return
-          <code>visible</code>, instead of <code>hidden</code>, when the user
-          agent is not minimized but is fully obscured by other applications.
+          "<a>visible</a>", instead of "<a>hidden</a>", when the user agent is
+          not minimized but is fully obscured by other applications.
         </p>
       </section>
-      <section>
+      <section data-dfn-for="Document" data-link-for="Document">
         <h3>
-          <code>onvisiblitychange</code> event handler
+          <dfn>onvisibilitychange</dfn> event handler attribute
         </h3>
         <p>
-          <dfn for='Document'>onvisibilitychange</dfn> is an <a href=
-          "https://www.w3.org/TR/html/webappapis.html#event-handler-idl-event-handler-idl-attribute">
+          <a>onvisibilitychange</a> is an <a data-cite=
+          "!HTML/webappapis.html#event-handler-idl-event-handler-idl-attribute">
           event handler IDL attribute</a> for the <a>visibilitychange</a> event
           type.
         </p>
@@ -311,37 +309,35 @@
     </section>
     <section>
       <h2>
-        Reacting to <dfn>visibilitychange</dfn> changes
+        Reacting to <code><dfn>visibilitychange</dfn></code> changes
       </h2>
       <p>
-        The <a>task source</a> for these <a>tasks</a> is the <a href=
-        "https://www.w3.org/TR/html/webappapis.html#user-interaction-task-source">
-        user interaction task source</a>.
+        The <a>task source</a> for these <a>tasks</a> is the <a data-cite=
+        "!HTML/webappapis.html#user-interaction-task-source">user interaction
+        task source</a>.
       </p>
       <p>
         When the user agent determines that the visibility of the
         <a>Document</a> of the <a>top level browsing context</a> has changed,
         the user agent MUST run the following steps:
       </p>
-      <ol>
+      <ol class="algorithm" data-link-for="VisibilityState">
         <li>Let <var>doc</var> be the <a>Document</a> of the <a>top level
         browsing context</a>.
         </li>
-        <li>If <var>doc</var> is now <a data-link-for=
-        "VisibilityState">visible</a>:
+        <li>If <var>doc</var> is now <a>visible</a>:
           <ol>
             <li>If traversing to a <a>session history entry</a>, run the <a>now
             visible algorithm</a> before running the step to fire the
-            <code>pageshow</code> event.
+            <a>pageshow</a> event.
             </li>
             <li>Otherwise, <a>queue a task</a> that runs the <a>now visible
             algorithm</a>.
             </li>
           </ol>
         </li>
-        <li>Else if <var>doc</var> is now not <a data-link-for=
-        "VisibilityState">visible</a>, or if the user agent is to <a>unload</a>
-        <var>doc</var>:
+        <li>Else if <var>doc</var> is now not <a>visible</a>, or if the user
+        agent is to <a>unload</a> <var>doc</var>:
           <ol>
             <li>If the user agent is to <a>unload</a> the <a>Document</a>, run
             the <a>now hidden algorithm</a> during the <a>unloading document
@@ -357,7 +353,7 @@
         The <dfn>now visible algorithm</dfn> runs the following steps
         synchronously:
       </p>
-      <ol>
+      <ol class="algorithm">
         <li>Let <var>doc</var> be the <a>Document</a> of the <a>top level
         browsing context</a>.
         </li>
@@ -371,7 +367,7 @@
         The <dfn>now hidden algorithm</dfn> runs the following steps
         synchronously:
       </p>
-      <ol>
+      <ol class="algorithm">
         <li>Let <var>doc</var> be the <a>Document</a> of the <a>top level
         browsing context</a>.
         </li>
@@ -390,11 +386,11 @@
         The <cite>Page Visibility API</cite> enables developers to know when a
         <a>Document</a> is visible or in focus. Existing mechanisms, such as
         the <code>focus</code> and <code>blur</code> events, when attached to
-        the <code>Window</code> object already provide a mechanism to detect
-        when the <a>Document</a> is the active document; the
-        <code>unload</code> event provides a notification that the page is
-        being unloaded. This API extends these capabilities by also exposing
-        the <code>prerender</code> state of the <a>Document</a>—see
+        the <a>Window</a> object already provide a mechanism to detect when the
+        <a>Document</a> is the active document; the <code>unload</code> event
+        provides a notification that the page is being unloaded. This API
+        extends these capabilities by also exposing the <a data-link-for=
+        "VisibilityState">prerender</a> state of the <a>Document</a>—see
         [[!RESOURCE-HINTS]] security and privacy section for relevant
         considerations and best practices on the use of prerender—and unifies
         all of the above in a single API to simplify development of
@@ -406,72 +402,64 @@
         Terminology
       </h3>
       <p>
-        The following concepts and interfaces are defined in the [[!HTML51]]
+        The following concepts and interfaces are defined in the [[!HTML]]
         specification:
       </p>
-      <ul>
+      <ul data-sort="">
         <li>
-          <dfn><a href=
-          "https://www.w3.org/TR/html/browsers.html#dom-window-defaultview"><code>
-          defaultView</code></a></dfn>
+          <code><dfn data-cite=
+          "!HTML/browsers.html#dom-window-defaultview">defaultView</dfn></code>
         </li>
         <li>
-          <dfn><a href=
-          "https://www.w3.org/TR/html/fullindex.html#eventdef-global-pageshow"><code>
-          pageshow</code></a></dfn>
+          <dfn data-cite=
+          "!HTML/fullindex.html#eventdef-global-pageshow">pageshow</dfn>
         </li>
         <li>
-          <dfn><a href=
-          "https://www.w3.org/TR/html/browsers.html#session-history-entry">session
-          history entry</a></dfn>
+          <dfn data-cite="!HTML/browsers.html#session-history-entry">session
+          history entry</dfn>
         </li>
         <li>
-          <dfn><a href=
-          "https://www.w3.org/TR/html/browsers.html#top-level-browsing-context">
-          top level browsing context</a></dfn>
+          <dfn data-cite="!HTML/browsers.html#top-level-browsing-context">top
+          level browsing context</dfn>
         </li>
         <li>
-          <dfn><a href=
-          "https://www.w3.org/TR/html/browsers.html#unloading-document-visibility-change-steps">
-          unloading document visibility change steps</a></dfn>
+          <dfn data-cite=
+          "!HTML/browsers.html#unloading-document-visibility-change-steps">unloading
+          document visibility change steps</dfn>
         </li>
         <li>
-          <dfn><a href=
-          "https://www.w3.org/TR/html/browsers.html#unloading-documents">unload</a></dfn>
+          <dfn data-cite="!HTML/browsers.html#unloading-documents">unload</dfn>
         </li>
         <li>
-          <dfn><a href=
-          "https://www.w3.org/TR/html/dom.html#the-document-object"><code>Document</code></a></dfn>
+          <code><dfn data-cite=
+          "!HTML/dom.html#the-document-object">Document</dfn></code>
         </li>
         <li>
-          <dfn><a href=
-          "https://www.w3.org/TR/html/fullindex.html#eventdef-global-blur"><code>
-          blur</code></a></dfn>
+          <code><dfn data-cite=
+          "!HTML/fullindex.html#eventdef-global-blur">blur</dfn></code>
         </li>
         <li>
-          <dfn><a href=
-          "https://www.w3.org/TR/html/fullindex.html#eventdef-global-focus"><code>
-          focus</code></a></dfn>
+          <code><dfn data-cite=
+          "!HTML/fullindex.html#eventdef-global-focus">focus</dfn></code>
         </li>
         <li>
-          <a href=
-          "https://www.w3.org/TR/html/webappapis.html#queuing"><dfn>queue a
-          task</dfn></a>
+          <dfn data-cite="!HTML/webappapis.html#queuing">queue a task</dfn>
         </li>
         <li>
-          <dfn><a href=
-          "https://www.w3.org/TR/html/webappapis.html#task-source">task
-          source</a></dfn>
+          <dfn data-cite="!HTML/webappapis.html#task-source">task source</dfn>
         </li>
         <li>
-          <dfn data-lt="task|tasks"><a href=
-          "https://www.w3.org/TR/html/webappapis.html#tasks">task</a></dfn>
+          <dfn data-lt="task|tasks" data-cite=
+          "!HTML/webappapis.html#tasks">task</dfn>
+        </li>
+        <li>
+          <code><dfn data-cite=
+          "!HTML/window-object.html#window">Window</dfn></code>
         </li>
       </ul>
       <p>
-        The [[!DOM4]] specification defines how to <dfn><a href=
-        "https://www.w3.org/TR/dom/#concept-event-fire">fire a simple
-        event</a></dfn>.
+        The [[!DOM]] specification defines how to <dfn data-cite=
+        "!DOM#concept-event-fire">fire a simple event</dfn>.
       </p>
     </section>
     <section id="acknowledgements" class="appendix">
