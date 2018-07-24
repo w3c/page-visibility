@@ -41,7 +41,8 @@
     wgPublicList: "public-web-perf",
     implementationReportURI: "https://wpt.fyi/page-visibility/",
     // noLegacyStyle: true,
-    testSuiteURI: "https://w3c-test.org/page-visibility/"
+    testSuiteURI: "https://github.com/web-platform-tests/wpt/tree/master/page-visibility",
+    caniuse: "pagevisibility"
     };
     </script>
   </head>
@@ -288,13 +289,9 @@
           </li>
         </ol>
         <p data-link-for="VisibilityState">
-          The user agent MAY return "<a>hidden</a>" if the window is fully obscured 
-          by an accessibility tool but the accessibility tool is not covering it.
-          To accommodate assistive technologies that are typically full screen
-          but still show a view of the page, when applicable, on getting, the
-          <a data-link-for="Document">visibilityState</a> attribute MAY return
-          "<a>visible</a>", instead of "<a>hidden</a>", when the user agent is
-          not minimized but is fully obscured by other applications.
+          When possible, if the user agent is fully obscured by another 
+          application, the <a>visibilityState</a> attribute SHOULD return 
+          "<a>hidden</a>", except if a view of the <var>doc</var> is displayed in an accessibility tool.
         </p>
       </section>
       <section data-dfn-for="Document" data-link-for="Document">
