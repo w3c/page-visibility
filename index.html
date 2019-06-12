@@ -41,7 +41,8 @@
     wgPublicList: "public-web-perf",
     implementationReportURI: "https://wpt.fyi/page-visibility/",
     // noLegacyStyle: true,
-    testSuiteURI: "https://w3c-test.org/page-visibility/"
+    testSuiteURI: "https://w3c-test.org/page-visibility/",
+    xref: 'web-platform'
     };
     </script>
   </head>
@@ -228,9 +229,9 @@
           run the <dfn>steps to determine the visibility state</dfn>:
         </p>
         <ol class="algorithm">
-          <li>Let <var>doc</var> be the <a>Document</a> of the <a>top level
-          browsing context</a>.
-          </li>
+          <li>Return "hidden" if the <a>context object</a>is not <a>fully active</a></li>
+          <li>Let <var>doc</var> be the <a>active document</a> of the <a>top level
+          browsing context</a> of the <a>context object</a>'s [=Document/browsing context=].</li>
           <li>If the <a>defaultView</a> of <var>doc</var> is <code>null</code>,
           return "<a data-lt="VisibilityState.hidden">hidden</a>".
           </li>
