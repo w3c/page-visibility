@@ -81,12 +81,6 @@
           is unloading a document;
         </li>
       </ul>
-      <p>
-        The Working Group expects to demonstrate 2 implementations of the
-        features listed in this specification by the end of the Candidate
-        Recommendation phase. <a data-link-for="VisibilityState">prerender</a>
-        is marked a feature at risk.
-      </p>
     </section>
     <section id="introduction" class='informative' data-link-for=
     "VisibilityState">
@@ -128,11 +122,6 @@
       </p>
       <pre class="example highlight" title="Visibility-aware video playback">
       var videoElement = document.getElementById("videoElement");
-
-      // pause video buffering if page is being prerendered
-      if (document.visibilityState == "prerender") {
-        // ...
-      }
 
       // Autoplay the video if application is visible
       if (document.visibilityState == "visible") {
@@ -185,13 +174,6 @@
           screen. This is the same condition under which the <a>hidden</a>
           attribute is set to <code>false</code>.
         </dd>
-        <dt>
-          <dfn>prerender</dfn>
-        </dt>
-        <dd>
-          The <a>Document</a> is loaded in the prerender mode and is not yet
-          visible.
-        </dd>
       </dl>
       <p>
         The <a>visibility states</a> are reflected in the API via the
@@ -199,7 +181,7 @@
       </p>
       <pre class="idl">
       enum VisibilityState {
-        "hidden", "visible", "prerender"
+        "hidden", "visible"
       };
       </pre>
     </section>
@@ -255,11 +237,6 @@
           <li>Otherwise, return the <a>VisibilityState</a> value that best
           matches the <a>visibility state</a> of <var>doc</var>:
             <ol data-link-for="VisibilityState">
-              <li>If <var>doc</var> was <a data-cite=
-              "RESOURCE-HINTS#prerender">prerendered</a> [[!RESOURCE-HINTS]]
-              and has not previously transitioned to "<a>visible</a>", return
-              "<a>prerender</a>".
-              </li>
               <li>Return "<a>visible</a>" if:
                 <ol>
                   <li>The user agent is not minimized and <var>doc</var> is the
@@ -388,13 +365,7 @@
         the <code>focus</code> and <code>blur</code> events, when attached to
         the <a>Window</a> object already provide a mechanism to detect when the
         <a>Document</a> is the active document; the <code>unload</code> event
-        provides a notification that the page is being unloaded. This API
-        extends these capabilities by also exposing the <a data-link-for=
-        "VisibilityState">prerender</a> state of the <a>Document</a>—see
-        [[!RESOURCE-HINTS]] security and privacy section for relevant
-        considerations and best practices on the use of prerender—and unifies
-        all of the above in a single API to simplify development of
-        visibility-aware and efficient applications.
+        provides a notification that the page is being unloaded.
       </p>
     </section>
     <section>
