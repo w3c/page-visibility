@@ -5,7 +5,7 @@
     <title>
       Page Visibility Level 2
     </title>
-    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class=
+    <script src="https://www.w3.org/Tools/respec/respec-w3c" class=
     "remove"></script>
     <script class='remove'>
     //make tidy happy
@@ -63,8 +63,7 @@
       <ul data-link-for="Document">
         <li>Processing and IDL clarifications:
           <ul>
-            <li>
-              <code>VisibilityState.unloaded</code> has been removed.
+            <li>`VisibilityState.unloaded` has been removed.
             </li>
             <li>
               <a>Document.hidden</a> is historical. Use
@@ -84,14 +83,13 @@
         </li>
       </ul>
     </section>
-    <section id="introduction" class='informative' data-link-for=
-    "VisibilityState">
+    <section id="introduction" class='informative'>
       <h2>
         Introduction
       </h2>
       <p>
         The <cite>Page Visibility API</cite> defines a means to
-        programmatically determine the <a>visibility state</a> of a top level
+        programmatically determine the <a>visibility state</a> of a top-level
         browsing context, and to be notified if the <a>visibility state</a>
         changes. Without knowing the <a>visibility state</a> of a page, web
         developers have been designing web pages as if they are always
@@ -109,9 +107,6 @@
         longer <a>visible</a>.
       </p>
     </section>
-    <section id="conformance">
-      <!-- autofilled by respec -->
-    </section>
     <section class='informative' data-link-for="VisibilityState">
       <h2>
         Examples of usage
@@ -122,77 +117,91 @@
         <a>visible</a>, and automatically pause the playback when the
         application is <a>hidden</a>:
       </p>
-      <pre class="example highlight" title="Visibility-aware video playback">
-      var videoElement = document.getElementById("videoElement");
+      <pre class="example js" title="Visibility-aware video playback">
+      const videoElement = document.getElementById("videoElement");
 
       // Autoplay the video if application is visible
-      if (document.visibilityState == "visible") {
+      if (document.visibilityState === "visible") {
         videoElement.play();
       }
 
       // Handle page visibility change events
       function handleVisibilityChange() {
-        if (document.visibilityState == "hidden") {
+        if (document.visibilityState === "hidden") {
           videoElement.pause();
         } else {
           videoElement.play();
         }
       }
 
-      document.addEventListener('visibilitychange', handleVisibilityChange, false);
+      document.addEventListener('visibilitychange', handleVisibilityChange);
 </pre>
       <p data-link-for="Document">
         Similar logic can be applied to intelligently pause and resume, or
         throttle, execution of application code such as animation loops,
         analytics, and other types of processing. By combining the
-        <a>visibilityState</a> attribute of the <a>Document</a> interface and
-        the <a>visibilitychange</a> event, the application is able to both
-        query and listen to page visibility events to deliver a better user
+        <a>visibilityState</a> attribute of the {{Document}} interface and the
+        <a>visibilitychange</a> event, the application is able to both query
+        and listen to page visibility events to deliver a better user
         experience, as well as improve efficiency and performance of its
         execution.
       </p>
     </section>
-    <section data-dfn-for="VisibilityState" data-link-for="VisibilityState">
+    <section>
       <h2>
-        Visibility states and the <code>VisibilityState</code> enum
+        Visibility states
       </h2>
       <p>
-        The <a>Document</a> of the <a>top level browsing context</a> can be in
-        one of the following <dfn data-lt="visibility state">visibility
-        states</dfn>:
+        The {{Document}} of the <a>top-level browsing context</a> can be in one
+        of the following <dfn data-export="" data-lt=
+        "visibility state">visibility states</dfn>:
       </p>
       <dl data-sort="">
         <dt>
-          <dfn>hidden</dfn>
+          <dfn data-export="">hidden</dfn>
         </dt>
         <dd>
-          The <a>Document</a> is not <a>visible</a> at all on any screen.
+          The {{Document}} is not <a>visible</a> at all on any screen.
         </dd>
         <dt>
-          <dfn>visible</dfn>
+          <dfn data-export="">visible</dfn>
         </dt>
         <dd>
-          The <a>Document</a> is at least partially visible on at least one
-          screen. This is the same condition under which the <a>hidden</a>
-          attribute is set to <code>false</code>.
+          The {{Document}} is at least partially visible on at least one
+          screen.
         </dd>
       </dl>
       <p>
         The <a>visibility states</a> are reflected in the API via the
-        <code><dfn>VisibilityState</dfn></code> enum.
+        <a>VisibilityState</a> enum.
       </p>
+    </section>
+    <section data-dfn-for="VisibilityState" data-link-for="VisibilityState">
+      <h2>
+        <code>VisibilityState</code> enum
+      </h2>
       <pre class="idl">
       enum VisibilityState {
         "hidden", "visible"
       };
       </pre>
+      <p>
+        The <dfn>VisibilityState</dfn> enum is used to represent the
+        <a>visibility states</a>.
+      </p>
+      <p>
+        The "<dfn>hidden</dfn>" enum value represents the <a data-link-for=
+        "">hidden</a> <a>visibility state</a>. Likewise, the
+        "<dfn>visible</dfn>" enum value represents the <a data-link-for=
+        "">visible</a> <a>visibility state</a>.
+      </p>
     </section>
     <section data-dfn-for="Document">
       <h2>
         Extensions to the <code>Document</code> interface
       </h2>
       <p>
-        This specification extends the <a>Document</a> interface:
+        This specification extends the {{Document}} interface:
       </p>
       <pre class="idl">
       partial interface Document {
@@ -230,16 +239,16 @@
           run the <dfn>steps to determine the visibility state</dfn>:
         </p>
         <ol class="algorithm">
-          <li>Let <var>doc</var> be the <a>Document</a> of the <a>top level
+          <li>Let <var>doc</var> be the {{Document}} of the <a>top-level
           browsing context</a>.
           </li>
-          <li>If the <a>defaultView</a> of <var>doc</var> is <code>null</code>,
-          return "<a data-lt="VisibilityState.hidden">hidden</a>".
+          <li>If the {{defaultView}} of <var>doc</var> is <code>null</code>,
+          return {{VisibilityState["hidden"]}}.
           </li>
           <li>Otherwise, return the <a>VisibilityState</a> value that best
           matches the <a>visibility state</a> of <var>doc</var>:
-            <ol data-link-for="VisibilityState">
-              <li>Return "<a>visible</a>" if:
+            <ol>
+              <li>Return {{VisibilityState["visible"]}} if:
                 <ol>
                   <li>The user agent is not minimized and <var>doc</var> is the
                   foreground tab.
@@ -250,14 +259,15 @@
                   </li>
                 </ol>
               </li>
-              <li>Return "<a>hidden</a>" if:
+              <li>Return {{VisibilityState["hidden"]}} if:
                 <ol>
                   <li>The user agent is minimized.
                   </li>
                   <li>The user agent is not minimized, but <var>doc</var> is on
                   a background tab.
                   </li>
-                  <li>The user agent is to <a>unload</a> <var>doc</var>.
+                  <li>The user agent is to <a data-xref-type="event">unload</a>
+                  <var>doc</var>.
                   </li>
                   <li>The Operating System lock screen is shown.
                   </li>
@@ -279,10 +289,8 @@
           <dfn>onvisibilitychange</dfn> event handler attribute
         </h3>
         <p>
-          <a>onvisibilitychange</a> is an <a data-cite=
-          "!HTML/webappapis.html#event-handler-idl-event-handler-idl-attribute">
-          event handler IDL attribute</a> for the <a>visibilitychange</a> event
-          type.
+          The <a>onvisibilitychange</a> attribute is an <a>event handler IDL
+          attribute</a> for the <a>visibilitychange</a> event type.
         </p>
       </section>
     </section>
@@ -291,24 +299,23 @@
         Reacting to <code><dfn>visibilitychange</dfn></code> changes
       </h2>
       <p>
-        The <a>task source</a> for these <a>tasks</a> is the <a data-cite=
-        "!HTML/webappapis.html#user-interaction-task-source">user interaction
-        task source</a>.
+        The <a>task source</a> for these <a>tasks</a> is the <a>user
+        interaction task source</a>.
       </p>
       <p>
-        When the user agent determines that the visibility of the
-        <a>Document</a> of the <a>top level browsing context</a> has changed,
-        the user agent MUST run the following steps:
+        When the user agent determines that the visibility of the {{Document}}
+        of the <a>top-level browsing context</a> has changed, the user agent
+        MUST run the following steps:
       </p>
-      <ol class="algorithm" data-link-for="VisibilityState">
-        <li>Let <var>doc</var> be the <a>Document</a> of the <a>top level
-        browsing context</a>.
+      <ol class="algorithm">
+        <li>Let <var>doc</var> be the {{Document}} of the <a>top-level browsing
+        context</a>.
         </li>
         <li>If <var>doc</var> is now <a>visible</a>:
           <ol>
             <li>If traversing to a <a>session history entry</a>, run the <a>now
             visible algorithm</a> before running the step to fire the
-            <a>pageshow</a> event.
+            <a data-xref-type="event">pageshow</a> event.
             </li>
             <li>Otherwise, <a>queue a task</a> that runs the <a>now visible
             algorithm</a>.
@@ -316,11 +323,11 @@
           </ol>
         </li>
         <li>Else if <var>doc</var> is now not <a>visible</a>, or if the user
-        agent is to <a>unload</a> <var>doc</var>:
+        agent is to <a data-xref-type="event">unload</a> <var>doc</var>:
           <ol>
-            <li>If the user agent is to <a>unload</a> the <a>Document</a>, run
-            the <a>now hidden algorithm</a> during the <a>unloading document
-            visibility change steps</a>.
+            <li>If the user agent is to <a data-xref-type="event">unload</a>
+            the {{Document}}, run the <a>now hidden algorithm</a> during the
+            <a>unloading document visibility change steps</a>.
             </li>
             <li>Otherwise, <a>queue a task</a> that runs the <a>now hidden
             algorithm</a>.
@@ -333,32 +340,32 @@
         synchronously:
       </p>
       <ol class="algorithm">
-        <li>Let <var>doc</var> be the <a>Document</a> of the <a>top level
-        browsing context</a>.
+        <li>Let <var>doc</var> be the {{Document}} of the <a>top-level browsing
+        context</a>.
         </li>
         <li>
-          <a>Fire a simple event</a> named <code>visibilitychange</code> that
-          bubbles, isn't cancelable, and has no default action, at the
-          <var>doc</var>.
+          <a>Fire an event</a> named "`visibilitychange`" that bubbles, isn't
+          cancelable, and has no default action, at the <var>doc</var>.
         </li>
         <li>Run <dfn>external now visible algorithm</dfn> if one is defined by
-        another specification.</li>
+        another specification.
+        </li>
       </ol>
       <p>
         The <dfn>now hidden algorithm</dfn> runs the following steps
         synchronously:
       </p>
       <ol class="algorithm">
-        <li>Let <var>doc</var> be the <a>Document</a> of the <a>top level
-        browsing context</a>.
+        <li>Let <var>doc</var> be the {{Document}} of the <a>top-level browsing
+        context</a>.
         </li>
         <li>
-          <a>Fire a simple event</a> named <code>visibilitychange</code> that
-          bubbles, isn't cancelable, and has no default action, at the
-          <var>doc</var>.
+          <a>Fire an event</a> named "`visibilitychange`" that bubbles, isn't
+          cancelable, and has no default action, at the <var>doc</var>.
         </li>
         <li>Run <dfn>external now hidden algorithm</dfn> if one is defined by
-        another specification.</li>
+        another specification.
+        </li>
       </ol>
     </section>
     <section id="privacy-security">
@@ -367,11 +374,12 @@
       </h2>
       <p>
         The <cite>Page Visibility API</cite> enables developers to know when a
-        <a>Document</a> is visible or in focus. Existing mechanisms, such as
-        the <code>focus</code> and <code>blur</code> events, when attached to
-        the <a>Window</a> object already provide a mechanism to detect when the
-        <a>Document</a> is the active document; the <code>unload</code> event
-        provides a notification that the page is being unloaded.
+        {{Document}} is visible or in focus. Existing mechanisms, such as the
+        <a data-xref-type="event">focus</a> and <a data-xref-type=
+        "event">blur</a> events, when attached to the {{Window}} object already
+        provide a mechanism to detect when the {{Document}} is the active
+        document; the <a data-xref-type="event">unload</a> event provides a
+        notification that the page is being unloaded.
       </p>
     </section>
     <section>
@@ -384,60 +392,18 @@
       </p>
       <ul data-sort="">
         <li>
-          <code><dfn data-cite=
-          "!HTML/browsers.html#dom-window-defaultview">defaultView</dfn></code>
-        </li>
-        <li>
-          <dfn data-cite=
-          "!HTML/fullindex.html#eventdef-global-pageshow">pageshow</dfn>
-        </li>
-        <li>
           <dfn data-cite="!HTML/browsers.html#session-history-entry">session
           history entry</dfn>
-        </li>
-        <li>
-          <dfn data-cite="!HTML/browsers.html#top-level-browsing-context">top
-          level browsing context</dfn>
         </li>
         <li>
           <dfn data-cite=
           "!HTML/browsers.html#unloading-document-visibility-change-steps">unloading
           document visibility change steps</dfn>
         </li>
-        <li>
-          <dfn data-cite="!HTML/browsers.html#unloading-documents">unload</dfn>
-        </li>
-        <li>
-          <code><dfn data-cite=
-          "!HTML/dom.html#the-document-object">Document</dfn></code>
-        </li>
-        <li>
-          <code><dfn data-cite=
-          "!HTML/fullindex.html#eventdef-global-blur">blur</dfn></code>
-        </li>
-        <li>
-          <code><dfn data-cite=
-          "!HTML/fullindex.html#eventdef-global-focus">focus</dfn></code>
-        </li>
-        <li>
-          <dfn data-cite="!HTML/webappapis.html#queuing">queue a task</dfn>
-        </li>
-        <li>
-          <dfn data-cite="!HTML/webappapis.html#task-source">task source</dfn>
-        </li>
-        <li>
-          <dfn data-lt="task|tasks" data-cite=
-          "!HTML/webappapis.html#tasks">task</dfn>
-        </li>
-        <li>
-          <code><dfn data-cite=
-          "!HTML/window-object.html#window">Window</dfn></code>
-        </li>
       </ul>
-      <p>
-        The [[!DOM]] specification defines how to <dfn data-cite=
-        "!DOM#concept-event-fire">fire a simple event</dfn>.
-      </p>
+    </section>
+    <section id="conformance">
+      <!-- autofilled by respec -->
     </section>
     <section id="acknowledgements" class="appendix">
       <h2>
