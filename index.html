@@ -242,8 +242,8 @@
           <li>Let <var>doc</var> be the {{Document}} of the <a>top-level
           browsing context</a>.
           </li>
-          <li>If the {{defaultView}} of <var>doc</var> is <code>null</code>,
-          return {{VisibilityState["hidden"]}}.
+          <li data-xref-for="Document">If the {{defaultView}} of <var>doc</var>
+          is <code>null</code>, return {{VisibilityState["hidden"]}}.
           </li>
           <li>Otherwise, return the <a>VisibilityState</a> value that best
           matches the <a>visibility state</a> of <var>doc</var>:
@@ -266,8 +266,7 @@
                   <li>The user agent is not minimized, but <var>doc</var> is on
                   a background tab.
                   </li>
-                  <li>The user agent is to <a data-xref-type="event">unload</a>
-                  <var>doc</var>.
+                  <li>The user agent is to [=Window/unload=] <var>doc</var>.
                   </li>
                   <li>The Operating System lock screen is shown.
                   </li>
@@ -315,7 +314,7 @@
           <ol>
             <li>If traversing to a <a>session history entry</a>, run the <a>now
             visible algorithm</a> before running the step to fire the
-            <a data-xref-type="event">pageshow</a> event.
+            [=Window/pageshow=] event.
             </li>
             <li>Otherwise, <a>queue a task</a> that runs the <a>now visible
             algorithm</a>.
@@ -323,11 +322,11 @@
           </ol>
         </li>
         <li>Else if <var>doc</var> is now not <a>visible</a>, or if the user
-        agent is to <a data-xref-type="event">unload</a> <var>doc</var>:
+        agent is to [=Window/unload=] <var>doc</var>:
           <ol>
-            <li>If the user agent is to <a data-xref-type="event">unload</a>
-            the {{Document}}, run the <a>now hidden algorithm</a> during the
-            <a>unloading document visibility change steps</a>.
+            <li>If the user agent is to [=Window/unload=] the {{Document}}, run
+            the <a>now hidden algorithm</a> during the <a>unloading document
+            visibility change steps</a>.
             </li>
             <li>Otherwise, <a>queue a task</a> that runs the <a>now hidden
             algorithm</a>.
@@ -375,11 +374,10 @@
       <p>
         The <cite>Page Visibility API</cite> enables developers to know when a
         {{Document}} is visible or in focus. Existing mechanisms, such as the
-        <a data-xref-type="event">focus</a> and <a data-xref-type=
-        "event">blur</a> events, when attached to the {{Window}} object already
-        provide a mechanism to detect when the {{Document}} is the active
-        document; the <a data-xref-type="event">unload</a> event provides a
-        notification that the page is being unloaded.
+        [=Window/focus=] and [=Window/blur=] events, when attached to the
+        {{Window}} object already provide a mechanism to detect when the
+        {{Document}} is the active document; the [=Window/unload=] event
+        provides a notification that the page is being unloaded.
       </p>
     </section>
     <section>
