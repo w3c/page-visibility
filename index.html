@@ -135,14 +135,14 @@
       }
 
       document.addEventListener('visibilitychange', handleVisibilityChange);
-</pre>
-      <p data-link-for="Document">
+      </pre>
+      <p>
         Similar logic can be applied to intelligently pause and resume, or
         throttle, execution of application code such as animation loops,
         analytics, and other types of processing. By combining the
-        <a>visibilityState</a> attribute of the {{Document}} interface and the
-        <a>visibilitychange</a> event, the application is able to both query
-        and listen to page visibility events to deliver a better user
+        {{Document/visibilityState}} attribute of the {{Document}} interface
+        and the <a>visibilitychange</a> event, the application is able to both
+        query and listen to page visibility events to deliver a better user
         experience, as well as improve efficiency and performance of its
         execution.
       </p>
@@ -239,23 +239,22 @@
           run the <dfn>steps to determine the visibility state</dfn>:
         </p>
         <ol class="algorithm">
-          <li>Let <var>doc</var> be the {{Document}} of the <a>top-level
+          <li>Let |doc:Document| be the {{Document}} of the <a>top-level
           browsing context</a>.
           </li>
-          <li>If the {{Document/defaultView}} of <var>doc</var> is
-          <code>null</code>, return {{VisibilityState["hidden"]}}.
+          <li>If the {{Document/defaultView}} of |doc| is `null`, return
+          {{VisibilityState["hidden"]}}.
           </li>
           <li>Otherwise, return the {{VisibilityState}} value that best matches
-          the <a>visibility state</a> of <var>doc</var>:
+          the <a>visibility state</a> of |doc|:
             <ol>
               <li>Return {{VisibilityState["visible"]}} if:
                 <ol>
-                  <li>The user agent is not minimized and <var>doc</var> is the
+                  <li>The user agent is not minimized and |doc| is the
                   foreground tab.
                   </li>
                   <li>The user agent is fully obscured by an accessibility
-                  tool, like a magnifier, but a view of the <var>doc</var> is
-                  shown.
+                  tool, like a magnifier, but a view of the |doc| is shown.
                   </li>
                 </ol>
               </li>
@@ -263,10 +262,10 @@
                 <ol>
                   <li>The user agent is minimized.
                   </li>
-                  <li>The user agent is not minimized, but <var>doc</var> is on
-                  a background tab.
+                  <li>The user agent is not minimized, but |doc| is on a
+                  background tab.
                   </li>
-                  <li>The user agent is to [=Window/unload=] <var>doc</var>.
+                  <li>The user agent is to [=Window/unload=] |doc|.
                   </li>
                   <li>The Operating System lock screen is shown.
                   </li>
@@ -275,12 +274,13 @@
             </ol>
           </li>
         </ol>
-        <p data-link-for="VisibilityState">
+        <p>
           To accommodate assistive technologies that are typically full screen
           but still show a view of the page, when applicable, on getting, the
-          <a data-link-for="Document">visibilityState</a> attribute MAY return
-          "<a>visible</a>", instead of "<a>hidden</a>", when the user agent is
-          not minimized but is fully obscured by other applications.
+          {{Document/visibilityState}} attribute MAY return
+          {{VisibilityState["visible"]}}, instead of
+          {{VisibilityState["hidden"]}}, when the user agent is not minimized
+          but is fully obscured by other applications.
         </p>
       </section>
       <section data-dfn-for="Document" data-link-for="Document">
@@ -307,10 +307,10 @@
         MUST run the following steps:
       </p>
       <ol class="algorithm">
-        <li>Let <var>doc</var> be the {{Document}} of the <a>top-level browsing
+        <li>Let |doc:Document| be the {{Document}} of the <a>top-level browsing
         context</a>.
         </li>
-        <li>If <var>doc</var> is now <a>visible</a>:
+        <li>If |doc| is now <a>visible</a>:
           <ol>
             <li>If traversing to a <a>session history entry</a>, run the <a>now
             visible algorithm</a> before running the step to fire the
@@ -321,8 +321,8 @@
             </li>
           </ol>
         </li>
-        <li>Else if <var>doc</var> is now not <a>visible</a>, or if the user
-        agent is to [=Window/unload=] <var>doc</var>:
+        <li>Else if |doc| is now not <a>visible</a>, or if the user agent is to
+        [=Window/unload=] |doc|:
           <ol>
             <li>If the user agent is to [=Window/unload=] the {{Document}}, run
             the <a>now hidden algorithm</a> during the <a>unloading document
@@ -339,12 +339,12 @@
         algorithm</dfn> runs the following steps synchronously:
       </p>
       <ol class="algorithm">
-        <li>Let <var>doc</var> be the {{Document}} of the <a>top-level browsing
+        <li>Let |doc:Document| be the {{Document}} of the <a>top-level browsing
         context</a>.
         </li>
         <li>
           <a>Fire an event</a> named "`visibilitychange`" that bubbles, isn't
-          cancelable, and has no default action, at the <var>doc</var>.
+          cancelable, and has no default action, at the |doc|.
         </li>
         <li>Run <dfn>external now visible algorithm</dfn> if one is defined by
         another specification.
@@ -355,12 +355,12 @@
         algorithm</dfn> runs the following steps synchronously:
       </p>
       <ol class="algorithm">
-        <li>Let <var>doc</var> be the {{Document}} of the <a>top-level browsing
+        <li>Let |doc:Document| be the {{Document}} of the <a>top-level browsing
         context</a>.
         </li>
         <li>
           <a>Fire an event</a> named "`visibilitychange`" that bubbles, isn't
-          cancelable, and has no default action, at the <var>doc</var>.
+          cancelable, and has no default action, at the |doc|.
         </li>
         <li>Run <dfn>external now hidden algorithm</dfn> if one is defined by
         another specification.
