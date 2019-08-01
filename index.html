@@ -173,7 +173,7 @@
       </dl>
       <p>
         The <a>visibility states</a> are reflected in the API via the
-        <a>VisibilityState</a> enum.
+        {{VisibilityState}} enum.
       </p>
     </section>
     <section data-dfn-for="VisibilityState" data-link-for="VisibilityState">
@@ -242,11 +242,11 @@
           <li>Let <var>doc</var> be the {{Document}} of the <a>top-level
           browsing context</a>.
           </li>
-          <li data-xref-for="Document">If the {{defaultView}} of <var>doc</var>
-          is <code>null</code>, return {{VisibilityState["hidden"]}}.
+          <li>If the {{Document/defaultView}} of <var>doc</var> is
+          <code>null</code>, return {{VisibilityState["hidden"]}}.
           </li>
-          <li>Otherwise, return the <a>VisibilityState</a> value that best
-          matches the <a>visibility state</a> of <var>doc</var>:
+          <li>Otherwise, return the {{VisibilityState}} value that best matches
+          the <a>visibility state</a> of <var>doc</var>:
             <ol>
               <li>Return {{VisibilityState["visible"]}} if:
                 <ol>
