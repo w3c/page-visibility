@@ -89,8 +89,8 @@
       </h2>
       <p>
         The <cite>Page Visibility API</cite> defines a means to
-        programmatically determine the <a>visibility state</a> of a top-level
-        browsing context, and to be notified if the <a>visibility state</a>
+        programmatically determine the <a>visibility state</a> of the <a>top-level
+        browsing context</a>, and to be notified if the <a>visibility state</a>
         changes. Without knowing the <a>visibility state</a> of a page, web
         developers have been designing web pages as if they are always
         <a>visible</a>. This not only results in higher machine resource
@@ -242,9 +242,6 @@
           <li>Return "hidden" if the <a>context object</a> is not [=Document/fully active=]</li>
           <li>Let |doc:Document| be the <a>active document</a> of the top level
           browsing context of the <a>context object</a>'s [=Document/browsing context=].</li>
-          <li>If the {{Document/defaultView}} of |doc| is `null`,
-          return {{VisibilityState["hidden"]}}.
-          </li>
           <li>Otherwise, return the {{VisibilityState}} value that best matches
           the <a>visibility state</a> of |doc|:
             <ol>
