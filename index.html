@@ -43,7 +43,7 @@
     wgPublicList: "public-web-perf",
     implementationReportURI: "https://wpt.fyi/page-visibility/",
     testSuiteURI: "https://w3c-test.org/page-visibility/",
-    xref: "web-platform"
+    xref: 'web-platform'
     };
     </script>
   </head>
@@ -89,8 +89,8 @@
       </h2>
       <p>
         The <cite>Page Visibility API</cite> defines a means to
-        programmatically determine the <a>visibility state</a> of a top-level
-        browsing context, and to be notified if the <a>visibility state</a>
+        programmatically determine the <a>visibility state</a> of the <a>top-level
+        browsing context</a>, and to be notified if the <a>visibility state</a>
         changes. Without knowing the <a>visibility state</a> of a page, web
         developers have been designing web pages as if they are always
         <a>visible</a>. This not only results in higher machine resource
@@ -239,49 +239,43 @@
           run the <dfn>steps to determine the visibility state</dfn>:
         </p>
         <ol class="algorithm">
-          <li>Let |doc:Document| be the {{Document}} of the <a>top-level
-          browsing context</a>.
-          </li>
-          <li>If the {{Document/defaultView}} of |doc| is `null`, return
-          {{VisibilityState["hidden"]}}.
-          </li>
+          <li>Return "hidden" if the <a>context object</a> is not [=Document/fully active=]</li>
+          <li>Let |doc:Document| be the <a>active document</a> of the top level
+          browsing context of the <a>context object</a>'s [=Document/browsing context=].</li>
           <li>Otherwise, return the {{VisibilityState}} value that best matches
           the <a>visibility state</a> of |doc|:
             <ol>
               <li>Return {{VisibilityState["visible"]}} if:
                 <ol>
-                  <li>The user agent is not minimized and |doc| is the
-                  foreground tab.
-                  </li>
-                  <li>The user agent is fully obscured by an accessibility
-                  tool, like a magnifier, but a view of the |doc| is shown.
-                  </li>
+                  <li>The user agent has a screen reader attached to the |doc|</li>
+                  <li>Any of the |doc|'s viewport contents are observable to the user</li>
                 </ol>
               </li>
               <li>Return {{VisibilityState["hidden"]}} if:
                 <ol>
-                  <li>The user agent is minimized.
-                  </li>
-                  <li>The user agent is not minimized, but |doc| is on a
-                  background tab.
-                  </li>
-                  <li>The user agent is to [=Window/unload=] |doc|.
-                  </li>
-                  <li>The Operating System lock screen is shown.
-                  </li>
+                  <li>The user agent is to [=Window/unload=] |doc|</li>
+                  <li>The |doc|'s viewport contents are not observable to the user</li>
                 </ol>
               </li>
             </ol>
           </li>
         </ol>
+        <div class="note">
         <p>
           To accommodate assistive technologies that are typically full screen
           but still show a view of the page, when applicable, on getting, the
           {{Document/visibilityState}} attribute MAY return
-          {{VisibilityState["visible"]}}, instead of
-          {{VisibilityState["hidden"]}}, when the user agent is not minimized
-          but is fully obscured by other applications.
-        </p>
+          {{VisibilityState["visible"]}}, instead of {{VisibilityState["hidden"]}}, when the user agent is
+          not minimized but is fully obscured by other applications.
+          <p>
+          Examples of ways that {{VisibilityState["hidden"]}} may be returned:
+          <ul>
+          <li>A tab is made into a background tab</li>
+          <li>The user agent is minimized</li>
+          <li>The user agent is moved off of the screen</li>
+          <li>The operating system's lock screen covers the user agent</li>
+          </ul>
+        </div>
       </section>
       <section data-dfn-for="Document" data-link-for="Document">
         <h3>
