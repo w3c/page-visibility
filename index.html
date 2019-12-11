@@ -146,8 +146,8 @@
       </h2>
       <p>
         The {{Document}} of the <a>top-level browsing context</a> can be in one
-        of the following <dfn data-dfn-for="Document" data-export="" data-lt="visibility state">visibility
-        states</dfn>:
+        of the following <dfn data-dfn-for="Document" data-export="" data-lt=
+        "visibility state">visibility states</dfn>:
       </p>
       <dl data-sort="">
         <dt>
@@ -234,41 +234,59 @@
           the <dfn>steps to determine the visibility state</dfn>:
         </p>
         <ol class="algorithm">
-          <li>Return "hidden" if the <a>context object</a> is not [=Document/fully active=]</li>
+          <li>Return "hidden" if the <a>context object</a> is not
+          [=Document/fully active=]
+          </li>
           <li>Let |doc:Document| be the <a>active document</a> of the top level
-          browsing context of the <a>context object</a>'s [=Document/browsing context=].</li>
+          browsing context of the <a>context object</a>'s [=Document/browsing
+          context=].
+          </li>
           <li>Otherwise, return the {{VisibilityState}} value that best matches
           the [=Document/visibility state=] of |doc|:
             <ol>
               <li>Return {{VisibilityState["visible"]}} if:
                 <ol>
-                  <li>The user agent has a screen reader attached to the |doc|</li>
-                  <li>Any of the |doc|'s viewport contents are observable to the user</li>
+                  <li>The user agent has a screen reader attached to the |doc|
+                  </li>
+                  <li>Any of the |doc|'s viewport contents are observable to
+                  the user
+                  </li>
                 </ol>
               </li>
               <li>Return {{VisibilityState["hidden"]}} if:
                 <ol>
-                  <li>The user agent is to [=Window/unload=] |doc|</li>
-                  <li>The |doc|'s viewport contents are not observable to the user</li>
+                  <li>The user agent is to [=Window/unload=] |doc|
+                  </li>
+                  <li>The |doc|'s viewport contents are not observable to the
+                  user
+                  </li>
                 </ol>
               </li>
             </ol>
           </li>
         </ol>
         <div class="note">
-        <p>
-          To accommodate assistive technologies that are typically full screen
-          but still show a view of the page, when applicable, on getting, the
-          {{Document/visibilityState}} attribute MAY return
-          {{VisibilityState["visible"]}}, instead of {{VisibilityState["hidden"]}}, when the user agent is
-          not minimized but is fully obscured by other applications.
           <p>
-          Examples of ways that {{VisibilityState["hidden"]}} may be returned:
+            To accommodate assistive technologies that are typically full
+            screen but still show a view of the page, when applicable, on
+            getting, the {{Document/visibilityState}} attribute MAY return
+            {{VisibilityState["visible"]}}, instead of
+            {{VisibilityState["hidden"]}}, when the user agent is not minimized
+            but is fully obscured by other applications.
+          </p>
+          <p>
+            Examples of ways that {{VisibilityState["hidden"]}} may be
+            returned:
+          </p>
           <ul>
-          <li>A tab is made into a background tab</li>
-          <li>The user agent is minimized</li>
-          <li>The user agent is moved off of the screen</li>
-          <li>The operating system's lock screen covers the user agent</li>
+            <li>A tab is made into a background tab
+            </li>
+            <li>The user agent is minimized
+            </li>
+            <li>The user agent is moved off of the screen
+            </li>
+            <li>The operating system's lock screen covers the user agent
+            </li>
           </ul>
         </div>
       </section>
