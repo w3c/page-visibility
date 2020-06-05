@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8">
     <title>
-      Page Visibility Level 2
+      Page Visibility
     </title>
     <script src="https://www.w3.org/Tools/respec/respec-w3c" class=
     "remove"></script>
     <script class='remove'>
     //make tidy happy
     var respecConfig = {
+      level: "2",
       specStatus: 'ED',
-      shortName: 'page-visibility-2',
       editors: [{
         name: "Ilya Grigorik",
         url: "https://www.igvita.com/",
@@ -19,16 +19,22 @@
         company: "Google Inc.",
         companyURL: "https://google.com/",
         w3cid: "56102"
-      },{
+      }, {
+        name: "Marcos Cáceres",
+        url: "https://github.com/marcoscaceres",
+        companyURL: "https://www.mozilla.com/",
+        company: "Mozilla",
+        w3cid: 39125,
+      }, {
         name: 'Arvind Jain',
         company: 'Google Inc.',
         companyURL: 'https://google.com/',
-        retired: "2014-12-01"
+        retiredDate: "2014-12-01"
       }, {
         name: 'Jatinder Mann',
         company: 'Microsoft Corp.',
         companyURL: 'https://microsoft.com',
-        retired: "2014-02-01"
+        retiredDate: "2014-02-01"
       }],
       wg: 'Web Performance Working Group',
       wgURI: 'https://www.w3.org/webperf/',
@@ -54,25 +60,23 @@
         Page Visibility Level 2 replaces the first version of
         [[PAGE-VISIBILITY]] and includes:
       </p>
-      <ul data-link-for="Document">
+      <ul>
         <li>Processing and IDL clarifications:
           <ul>
-            <li>`VisibilityState.unloaded` has been removed.
+            <li>{{VisibilityState}} enum value "unloaded" was removed.
             </li>
-            <li>
-              <a>Document.hidden</a> is historical. Use
-              <a>Document.visibilityState</a> instead.
+            <li>{{Document}}'s {{Document/hidden}} attribute is historical. Use
+            the {{Document}}'s {{Document/visibilityState}} attribute instead.
             </li>
-            <li>
-              <a>Document.onvisibilitychange</a> has been added.
+            <li>{{Document/onvisibilitychange}} event handler was added.
             </li>
             <li>Various enhancements and clarifications in the processing model
             and algorithms.
             </li>
           </ul>
         </li>
-        <li>[=Document/Visibility state=] is set to [=hidden=] when the user
-        agent is unloading a document;
+        <li>[=Document/Visibility state=] is set to [=Document/hidden=] when
+        the user agent is unloading a document;
         </li>
       </ul>
     </section>
@@ -100,7 +104,7 @@
         longer [=Document/visible=].
       </p>
     </section>
-    <section class='informative' data-link-for="VisibilityState">
+    <section class='informative'>
       <h2>
         Examples of usage
       </h2>
@@ -108,7 +112,7 @@
         To improve the user experience and optimize CPU and power efficiency
         the application could autoplay a video when the application is
         [=Document/visible=], and automatically pause the playback when the
-        application is <a>hidden</a>:
+        application is [=Document/hidden=]:
       </p>
       <pre class="example js" title="Visibility-aware video playback">
       const videoElement = document.getElementById("videoElement");
@@ -119,22 +123,25 @@
       }
 
       // Handle page visibility change events
-      function handleVisibilityChange() {
-        if (document.visibilityState === "hidden") {
-          videoElement.pause();
-        } else {
-          videoElement.play();
+      function visibilityListener() {
+        switch(document.visibilityState) {
+          case "hidden":
+            videoElement.pause();
+            break;
+          case "visible":
+            videoElement.play();
+            break;
         }
       }
 
-      document.addEventListener('visibilitychange', handleVisibilityChange);
+      document.addEventListener("visibilitychange", visibilityListener);
       </pre>
       <p>
         Similar logic can be applied to intelligently pause and resume, or
         throttle, execution of application code such as animation loops,
         analytics, and other types of processing. By combining the
         {{Document/visibilityState}} attribute of the {{Document}} interface
-        and the <a>visibilitychange</a> event, the application is able to both
+        and the `"visibilitychange"` event, the application is able to both
         query and listen to page visibility events to deliver a better user
         experience, as well as improve efficiency and performance of its
         execution.
@@ -155,7 +162,27 @@
           "dfn">hidden</dfn>
         </dt>
         <dd>
-          The {{Document}} is not [=Document/visible=] at all on any screen.
+          <p>
+            The {{Document}} is not [=Document/visible=] at all on any screen,
+            as determined by running the steps to [=determine the visibility
+            state=] of a [=browsing context=].
+          </p>
+          <aside class="note">
+            <p>
+              Examples of actions that can cause a document to be
+              [=Document/hidden=]:
+            </p>
+            <ul>
+              <li>A tab is made into a background tab.
+              </li>
+              <li>The user agent is minimized.
+              </li>
+              <li>The user agent is moved off of the screen.
+              </li>
+              <li>The operating system's lock screen covers the user agent.
+              </li>
+            </ul>
+          </aside>
         </dd>
         <dt>
           <dfn data-dfn-for="Document" data-export="" data-dfn-type=
@@ -163,13 +190,37 @@
         </dt>
         <dd>
           The {{Document}} is at least partially visible on at least one
-          screen.
+          screen, as determined by running the steps to [=determine the
+          visibility state=] of a [=browsing context=].
         </dd>
       </dl>
       <p>
         The [=Document/visibility states=] are reflected in the API via the
         {{VisibilityState}} enum.
       </p>
+      <p>
+        The steps to <dfn data-export="" data-dfn-type="abstract-op">determine
+        the visibility state</dfn> of a [=browsing context=] |context| are as
+        follows. The steps return a [=Document/visibility state=].
+      </p>
+      <ol class="algorithm">
+        <li>Let |doc:Document| be the |context|'s [=top-level browsing
+        context=]'s [=active document=].
+        </li>
+        <li>Assert: |doc| is a [=Document=].
+        </li>
+        <li>Return [=Document/visible=] if:
+          <ul>
+            <li>The user agent has assistive technologies attached to the
+            |doc|.
+            </li>
+            <li>Any of the |doc|'s viewport contents are visible to the user.
+            </li>
+          </ul>
+        </li>
+        <li>Otherwise, return [=Document/hidden=].
+        </li>
+      </ol>
     </section>
     <section data-dfn-for="VisibilityState">
       <h2>
@@ -193,7 +244,7 @@
     </section>
     <section data-dfn-for="Document">
       <h2>
-        Extensions to the <code>Document</code> interface
+        Extensions to the `Document` interface
       </h2>
       <p>
         This specification extends the {{Document}} interface:
@@ -205,104 +256,59 @@
         attribute EventHandler onvisibilitychange;
       };
       </pre>
-      <section data-dfn-for="Document" data-link-for="Document">
+      <section>
         <h3>
           <dfn>hidden</dfn> attribute
         </h3>
         <p>
-          On getting, the <a>hidden</a> attribute MUST run the <dfn>steps to
-          determine if the document is hidden</dfn>:
+          On getting, the [=Document/hidden=] attribute MUST:
         </p>
-        <ol data-link-for="VisibilityState" class="algorithm">
-          <li>If <a>steps to determine the visibility state</a> return
-          [=Document/visible=], then return <code>false</code>.
+        <ol class="algorithm">
+          <li>[=Determine the visibility state=] of [=this=]'s [=relevant
+          global object=]'s [=browsing context=]. If the result is
+          [=Document/visible=], then return `false`.
           </li>
-          <li>Otherwise, return <code>true</code>.
+          <li>Otherwise, return `true`.
           </li>
         </ol>
         <p class="note">
-          Support for <a>hidden</a> attribute is maintained for historical
-          reasons. Developers should use {{visibilityState}} where possible.
+          Support for the {{Document/hidden}} attribute is maintained for
+          historical reasons. Developers should use {{visibilityState}} where
+          possible.
         </p>
       </section>
-      <section data-dfn-for="Document" data-link-for="Document">
+      <section>
         <h3>
           <dfn>visibilityState</dfn> attribute
         </h3>
         <p>
-          On getting, the {{visibilityState}} attribute the user agent MUST run
-          the <dfn>steps to determine the visibility state</dfn>:
+          On getting, the {{visibilityState}} attribute the user agent MUST:
         </p>
         <ol class="algorithm">
-          <li>Return "hidden" if the <a>context object</a> is not
-          [=Document/fully active=]
+          <li>Let |state:Visibility State| be the result of [=determine the
+          visibility state=] of [=this=]'s [=relevant global object=]'s
+          [=browsing context=].
           </li>
-          <li>Let |doc:Document| be the <a>active document</a> of the top level
-          browsing context of the <a>context object</a>'s [=Document/browsing
-          context=].
-          </li>
-          <li>Otherwise, return the {{VisibilityState}} value that best matches
-          the [=Document/visibility state=] of |doc|:
-            <ol>
-              <li>Return {{VisibilityState["visible"]}} if:
-                <ol>
-                  <li>The user agent has a screen reader attached to the |doc|
-                  </li>
-                  <li>Any of the |doc|'s viewport contents are observable to
-                  the user
-                  </li>
-                </ol>
-              </li>
-              <li>Return {{VisibilityState["hidden"]}} if:
-                <ol>
-                  <li>The user agent is to [=Window/unload=] |doc|
-                  </li>
-                  <li>The |doc|'s viewport contents are not observable to the
-                  user
-                  </li>
-                </ol>
-              </li>
-            </ol>
+          <li>If |state| is [=Document/visible=], return
+          {{VisibilityState/"visible"}}. Otherwise, return
+          {{VisibilityState/"hidden"}}.
           </li>
         </ol>
-        <div class="note">
-          <p>
-            To accommodate assistive technologies that are typically full
-            screen but still show a view of the page, when applicable, on
-            getting, the {{Document/visibilityState}} attribute MAY return
-            {{VisibilityState["visible"]}}, instead of
-            {{VisibilityState["hidden"]}}, when the user agent is not minimized
-            but is fully obscured by other applications.
-          </p>
-          <p>
-            Examples of ways that {{VisibilityState["hidden"]}} may be
-            returned:
-          </p>
-          <ul>
-            <li>A tab is made into a background tab
-            </li>
-            <li>The user agent is minimized
-            </li>
-            <li>The user agent is moved off of the screen
-            </li>
-            <li>The operating system's lock screen covers the user agent
-            </li>
-          </ul>
-        </div>
       </section>
-      <section data-dfn-for="Document" data-link-for="Document">
+      <section>
         <h3>
           <dfn>onvisibilitychange</dfn> event handler attribute
         </h3>
         <p>
-          The <a>onvisibilitychange</a> attribute is an <a>event handler IDL
-          attribute</a> for the <a>visibilitychange</a> event type.
+          The {{Document/onvisibilitychange}} attribute is an <a>event handler
+          IDL attribute</a> for the `"visibilitychange"` event type (see
+          [[[#reacting-to-visibilitychange]]]).
         </p>
       </section>
     </section>
     <section>
-      <h2>
-        Reacting to <code><dfn>visibilitychange</dfn></code> changes
+      <h2 id="reacting-to-visibilitychange">
+        Reacting to `"visibilitychange"` changes
       </h2>
       <p>
         The <a>task source</a> for these <a>tasks</a> is the <a>user
@@ -385,6 +391,19 @@
         {{Window}} object already provide a mechanism to detect when the
         {{Document}} is the active document; the [=Window/unload=] event
         provides a notification that the page is being unloaded.
+      </p>
+    </section>
+    <section>
+      <h2>
+        Accessibility considerations
+      </h2>
+      <p>
+        To accommodate assistive technologies that are typically full screen
+        but still show a view of the page, when applicable, on getting, the
+        {{Document/visibilityState}} attribute MAY return
+        {{VisibilityState/"visible"}}, instead of {{VisibilityState/"hidden"}},
+        when the user agent is not minimized but is fully obscured by other
+        applications.
       </p>
     </section>
     <section>
