@@ -152,9 +152,9 @@
         Visibility states
       </h2>
       <p>
-        The {{Document}} of the <a>top-level browsing context</a> can be in one
-        of the following <dfn data-dfn-for="Document" data-export="" data-lt=
-        "visibility state">visibility states</dfn>:
+        The [=document=] of the <a>top-level browsing context</a> can be in one
+        of the following <dfn data-dfn-for="Document" data-export="">visibility
+        states</dfn>:
       </p>
       <dl data-sort="">
         <dt>
@@ -163,9 +163,10 @@
         </dt>
         <dd>
           <p>
-            The {{Document}} is not [=Document/visible=] at all on any screen,
+            The [=document=] is not [=Document/visible=] at all on any screen,
             as determined by running the steps to [=determine the visibility
-            state=] of a [=browsing context=].
+            state=] of the [=document=]'s [=relevant global object=]'s
+            [=browsing context=].
           </p>
           <aside class="note">
             <p>
@@ -189,9 +190,10 @@
           "dfn">visible</dfn>
         </dt>
         <dd>
-          The {{Document}} is at least partially visible on at least one
+          The [=document=] is at least partially visible on at least one
           screen, as determined by running the steps to [=determine the
-          visibility state=] of a [=browsing context=].
+          visibility state=] of the [=document=]'s [=relevant global object=]'s
+          [=browsing context=].
         </dd>
       </dl>
       <p>
@@ -199,8 +201,8 @@
         {{VisibilityState}} enum.
       </p>
       <p>
-        The steps to <dfn data-export="" data-dfn-type="abstract-op">determine
-        the visibility state</dfn> of a [=browsing context=] |context| are as
+        The steps to <dfn data-export="" data-dfn-type="dfn">determine the
+        visibility state</dfn> of a [=browsing context=] |context| are as
         follows. The steps return a [=Document/visibility state=].
       </p>
       <ol class="algorithm">
