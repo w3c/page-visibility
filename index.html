@@ -65,9 +65,6 @@
           <ul>
             <li>{{VisibilityState}} enum value "unloaded" was removed.
             </li>
-            <li>{{Document}}'s {{Document/hidden}} attribute is historical. Use
-            the {{Document}}'s {{Document/visibilityState}} attribute instead.
-            </li>
             <li>{{Document/onvisibilitychange}} event handler was added.
             </li>
             <li>Various enhancements and clarifications in the processing model
@@ -273,11 +270,6 @@
           <li>Otherwise, return `true`.
           </li>
         </ol>
-        <p class="note">
-          Support for the {{Document/hidden}} attribute is maintained for
-          historical reasons. Developers should use {{visibilityState}} where
-          possible.
-        </p>
       </section>
       <section>
         <h3>
