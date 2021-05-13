@@ -57,8 +57,8 @@
     </section>
     <section id="sotd">
       <p>
-        Page Visibility Level 2 replaces the first version of
-        [[PAGE-VISIBILITY]] and includes:
+        This document replaces the first edition of <cite>Page
+        Visibility</cite>, and includes:
       </p>
       <ul>
         <li>Processing and IDL clarifications:
@@ -236,9 +236,11 @@
       </p>
       <p>
         The "<dfn>hidden</dfn>" enum value represents the [=Document/hidden=]
-        [=Document/visibility state=]. Likewise, the "<dfn>visible</dfn>" enum
-        value represents the [=Document/visible=] [=Document/visibility
-        state=].
+        [=Document/visibility state=].
+      </p>
+      <p>
+        Likewise, the "<dfn>visible</dfn>" enum value represents the
+        [=Document/visible=] [=Document/visibility state=].
       </p>
     </section>
     <section data-dfn-for="Document">
@@ -260,14 +262,15 @@
           <dfn>hidden</dfn> attribute
         </h3>
         <p>
-          On getting, the [=Document/hidden=] attribute MUST:
+          On getting, the {{Document/hidden}} attribute MUST:
         </p>
         <ol class="algorithm">
-          <li>[=Determine the visibility state=] of [=this=]'s [=relevant
-          global object=]'s [=browsing context=]. If the result is
-          [=Document/visible=], then return `false`.
+          <li>Let |state:Visibility State| be the result of [=determine the
+          visibility state=] of [=this=]'s [=relevant global object=]'s
+          [=browsing context=].
           </li>
-          <li>Otherwise, return `true`.
+          <li>If |state| is [=Document/visible=], then return false. Return
+          true otherwise.
           </li>
         </ol>
       </section>
@@ -276,7 +279,8 @@
           <dfn>visibilityState</dfn> attribute
         </h3>
         <p>
-          On getting, the {{visibilityState}} attribute the user agent MUST:
+          On getting, the {{Document/visibilityState}} attribute the user agent
+          MUST:
         </p>
         <ol class="algorithm">
           <li>Let |state:Visibility State| be the result of [=determine the
