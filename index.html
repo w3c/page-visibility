@@ -300,84 +300,9 @@
         </h3>
         <p>
           The {{Document/onvisibilitychange}} attribute is an <a>event handler
-          IDL attribute</a> for the `"visibilitychange"` event type (see
-          [[[#reacting-to-visibilitychange]]]).
+          IDL attribute</a> for the `"visibilitychange"` event type.
         </p>
       </section>
-    </section>
-    <section>
-      <h2 id="reacting-to-visibilitychange">
-        Reacting to `"visibilitychange"` changes
-      </h2>
-      <p>
-        The <a>task source</a> for these <a>tasks</a> is the <a>user
-        interaction task source</a>.
-      </p>
-      <p>
-        When the user agent determines that the visibility of the {{Document}}
-        of the <a>top-level browsing context</a> has changed, the user agent
-        MUST run the following steps:
-      </p>
-      <ol class="algorithm">
-        <li>Let |doc:Document| be the {{Document}} of the <a>top-level browsing
-        context</a>.
-        </li>
-        <li>If |doc| is now [=Document/visible=]:
-          <ol>
-            <li>If traversing to a <a>session history entry</a>, run the <a>now
-            visible algorithm</a> before running the step to fire the
-            [=Window/pageshow=] event.
-            </li>
-            <li>Otherwise, <a>queue a task</a> that runs the <a>now visible
-            algorithm</a>.
-            </li>
-          </ol>
-        </li>
-        <li>Else if |doc| is now not [=Document/visible=], or if the user agent
-        is to [=Window/unload=] |doc|:
-          <ol>
-            <li>If the user agent is to [=Window/unload=] the {{Document}}, run
-            the <a>now hidden algorithm</a> during the <a>unloading document
-            visibility change steps</a>.
-            </li>
-            <li>Otherwise, <a>queue a task</a> that runs the <a>now hidden
-            algorithm</a>.
-            </li>
-          </ol>
-        </li>
-      </ol>
-      <p>
-        The <dfn data-export="" data-dfn-type="abstract-op">now visible
-        algorithm</dfn> runs the following steps synchronously:
-      </p>
-      <ol class="algorithm">
-        <li>Let |doc:Document| be the {{Document}} of the <a>top-level browsing
-        context</a>.
-        </li>
-        <li>
-          <a>Fire an event</a> named "`visibilitychange`" that bubbles, isn't
-          cancelable, and has no default action, at the |doc|.
-        </li>
-        <li>Run <dfn data-export="" data-dfn-type="abstract-op">external now
-        visible algorithm</dfn> if one is defined by another specification.
-        </li>
-      </ol>
-      <p>
-        The <dfn data-export="" data-dfn-type="abstract-op">now hidden
-        algorithm</dfn> runs the following steps synchronously:
-      </p>
-      <ol class="algorithm">
-        <li>Let |doc:Document| be the {{Document}} of the <a>top-level browsing
-        context</a>.
-        </li>
-        <li>
-          <a>Fire an event</a> named "`visibilitychange`" that bubbles, isn't
-          cancelable, and has no default action, at the |doc|.
-        </li>
-        <li>Run <dfn data-export="">external now hidden algorithm</dfn> if one
-        is defined by another specification.
-        </li>
-      </ol>
     </section>
     <section id="privacy-security">
       <h2>
