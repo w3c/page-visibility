@@ -66,8 +66,6 @@
           <ul>
             <li>{{VisibilityState}} enum value "unloaded" was removed.
             </li>
-            <li>{{Document/onvisibilitychange}} event handler was added.
-            </li>
             <li>Various enhancements and clarifications in the processing model
             and algorithms.
             </li>
@@ -255,7 +253,6 @@
       partial interface Document {
         readonly attribute boolean hidden;
         readonly attribute VisibilityState visibilityState;
-        attribute EventHandler onvisibilitychange;
       };
       </pre>
       <section>
@@ -293,19 +290,6 @@
           {{VisibilityState/"hidden"}}.
           </li>
         </ol>
-      </section>
-      <section>
-        <h3>
-          <dfn>onvisibilitychange</dfn> event handler attribute
-        </h3>
-        <p>
-          The {{Document/onvisibilitychange}} attribute is an <a>event handler
-          IDL attribute</a> for the `"visibilitychange"` event type.
-        </p>
-
-        <p class="note">
-          The `"visibilitychange"` event is invoked from the [[HTML]] spec.
-        </p>
       </section>
     </section>
     <section id="privacy-security">
